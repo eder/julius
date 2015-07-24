@@ -1,0 +1,22 @@
+{
+  "name": "Julius",
+  "version": "0.0.1",
+  "description": "Julius",
+  "main": "gulpfile.js",
+  "dependencies": {
+    "gulp": "^3.8.11",
+    "requirejs": "^2.1.17",
+    "webpack": "^1.10.1",
+    "webpack-stream": "^2.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/edee/julius.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eder/julius/issues"
+  },
+  "homepage": "https://github.com/eder/julius"
+}

@@ -5,6 +5,6 @@ Julius is app for chrome  that  puts one image on top of your  HTML at its actua
 This help you make your HTML more easy, since now you can compare  the layout with the HTML. 
 
 ###Features
-+ Displays JPG, PNG (also with transparency), TIFF, GIF
++ Displays JPG, PNG (also with transparency), GIF.
 + Keyboard control for pixel precise positioning.
 

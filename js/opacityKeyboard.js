@@ -33,9 +33,6 @@ define(['jQuery', 'hotkeys'], function($, hotkeys) {
                 opacity -= 0.1;
                 container().css({'opacity': opacity});
             });
-            
-
-
         },
         
         init: function () {

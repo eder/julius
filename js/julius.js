@@ -3153,7 +3153,7 @@
 	                    id: 'container'
 	                });
 	            $(container).css({
-	                'width' : 'auto',
+	                //'width' : 'auto',
 	                'height' : 'auto',
 	                'position' : 'fixed',
 	                'display': 'block',
@@ -3170,9 +3170,14 @@
 	               src: object.path
 	           }));
 	        },
+	        centerContainer : function () {
+	           var width =  $('#container > img').width();
+	           $('#container').css({'width': width + 'px'});
+	        },
 	        init : function () {
 	            this.container();
 	            this.insertImage();
+	            this.centerContainer();
 	        }
 	    }
 	}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -3481,9 +3486,6 @@
 	                opacity -= 0.1;
 	                container().css({'opacity': opacity});
 	            });
-	            
-
-
 	        },
 	        
 	        init: function () {

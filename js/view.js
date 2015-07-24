@@ -26,9 +26,14 @@ define(['jQuery'], function ($) {
                src: object.path
            }));
         },
+        centerContainer : function () {
+           var width =  $('#container > img').width();
+           $('#container').css({'width': width + 'px'});
+        },
         init : function () {
             this.container();
             this.insertImage();
+            this.centerContainer();
         }
     }
 });

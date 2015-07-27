@@ -15,7 +15,8 @@ define(['jQuery', 'js/storage' ], function ($, storage) {
                 'top':  storage.read().vertical,
                 'left': storage.read().horizontal,
                 'right': 0,
-                'margin': 'auto'
+                'margin': 'auto',
+                'opacity': storage.read().opacity
             });
             $('#container').remove();
             $body.append(container);

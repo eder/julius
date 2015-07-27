@@ -51,8 +51,8 @@
 
 	}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 
-	!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(3), __webpack_require__(4), __webpack_require__(6)], __WEBPACK_AMD_DEFINE_RESULT__ = function (view, move, opacity) {
-	    view.init();  
+	!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(3), __webpack_require__(6), __webpack_require__(8)], __WEBPACK_AMD_DEFINE_RESULT__ = function (view, move, opacity) {
+	    view.init();
 	    move.init();
 	    opacity.init();
 	}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -3144,8 +3144,7 @@
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;'use strict';
 
-	!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(1)], __WEBPACK_AMD_DEFINE_RESULT__ = function ($) {
-	    
+	!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(1), __webpack_require__(4) ], __WEBPACK_AMD_DEFINE_RESULT__ = function ($, storage) {
 	    return {
 	        container : function () {
 	            var $body = $('body'),
@@ -3153,33 +3152,31 @@
 	                    id: 'container'
 	                });
 	            $(container).css({
-	                //'width' : 'auto',
+	                'width' : 'auto',
 	                'height' : 'auto',
 	                'position' : 'fixed',
 	                'display': 'block',
-	                'top': 0,
-	                'left': 0,
+	                'top':  storage.read().vertical,
+	                'left': storage.read().horizontal,
 	                'right': 0,
 	                'margin': 'auto'
-	            })
+	            });
 	            $('#container').remove();
 	            $body.append(container);
 	        },
 	        insertImage : function () {
-	           $('#container').html($('<img>',{
-	               src: object.path
-	           }));
-	        },
-	        centerContainer : function () {
-	           var width =  $('#container > img').width();
-	           $('#container').css({'width': width + 'px'});
+	            $('#container').html($('<img>',{
+	                src: storage.read().path
+	            }));
 	        },
 	        init : function () {
+	            if(object.path !== storage.read().path) {
+	                 storage.create(object);
+	            }
 	            this.container();
 	            this.insertImage();
-	            this.centerContainer();
 	        }
-	    }
+	    };
 	}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 
 
@@ -3189,41 +3186,139 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;'use strict';
-	!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(1), __webpack_require__(5)], __WEBPACK_AMD_DEFINE_RESULT__ = function($, hotkeys) {
-	    var vertical = 0, horizontal = 0,
-	        container = function () {
+	!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(1),__webpack_require__(5)], __WEBPACK_AMD_DEFINE_RESULT__ = function ($, htmlstorage) {
+	    var storage_name = 'juliusLayer', index;
+	    return {
+	        create: function (data) {
+	            if(this.isDiference(data)) {
+	                $.localStorage.setItem(storage_name, JSON.stringify(data));
+	            }
+	        },
+	        read: function () {
+	            var  result = $.localStorage.getItem(storage_name);
+	            console.log(result);
+	            return JSON.parse(result);
+	        },
+	        remove: function () {
+	            $.sessionStorage.removeItem(storage_name);
+	        },
+	        isDiference: function (data) {
+	            var res = this.read(data);
+	             if (res) {
+	                return this.compareJSON(res, data);
+	             }
+	        },
+	        compareJSON : function(oldValue, newValue) {
+	            for( index in newValue) {
+	                if(oldValue[index] !== newValue[index]) {
+	                    return true;
+	                }
+	            }
+	        }
+	    };
+	}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ },
+/* 5 */
+/***/ function(module, exports) {
+
+	/*! Html5 Storage jQuery Plugin - v1.0 - 2013-01-19
+	 * https://github.com/artberri/jquery-html5storage
+	 * Copyright (c) 2013 Alberto Varela; Licensed MIT */
+	(function(e, t) {
+	    "use strict";
+	    var n = ["localStorage", "sessionStorage"],
+	        r = [];
+	    t.each(n, function(n, i) {
+	        try {
+	            r[i] = i in e && e[i] !== null
+	        } catch (s) {
+	            r[i] = !1
+	        }
+	        t[i] = {
+	            settings: {
+	                cookiePrefix: "html5fallback:" + i + ":",
+	                cookieOptions: {
+	                    path: "/",
+	                    domain: document.domain,
+	                    expires: "localStorage" === i ? {
+	                        expires: 365
+	                    } : undefined
+	                }
+	            },
+	            getItem: function(n) {
+	                var s;
+	                return r[i] ? s = e[i].getItem(n) : s = t.cookie(this.settings.cookiePrefix + n), s
+	            },
+	            setItem: function(n, s) {
+	                return r[i] ? e[i].setItem(n, s) : t.cookie(this.settings.cookiePrefix + n, s, this.settings.cookieOptions)
+	            },
+	            removeItem: function(n) {
+	                if (r[i]) return e[i].removeItem(n);
+	                var s = t.extend(this.settings.cookieOptions, {
+	                    expires: -1
+	                });
+	                return t.cookie(this.settings.cookiePrefix + n, null, s)
+	            },
+	            clear: function() {
+	                if (r[i]) return e[i].clear();
+	                var n = new RegExp("^" + this.settings.cookiePrefix, ""),
+	                    s = t.extend(this.settings.cookieOptions, {
+	                        expires: -1
+	                    });
+	                document.cookie && document.cookie !== "" && t.each(document.cookie.split(";"), function(e, r) {
+	                    n.test(r = t.trim(r)) && t.cookie(r.substr(0, r.indexOf("=")), null, s)
+	                })
+	            }
+	        }
+	    })
+	})(window, jQuery);
+
+
+/***/ },
+/* 6 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;'use strict';
+	!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(1), __webpack_require__(7), __webpack_require__(4)], __WEBPACK_AMD_DEFINE_RESULT__ = function($, hotkeys, storage) {
+	    var objLayer, container = function () {
 	            return $('#container');
 	        };
+	      
 
 	    return {
 	        up : function () {
 	            $(document).bind('keydown', 'Shift+up', function () {
-	                vertical += -1;
-	                container().css({'top' : vertical });
+	                objLayer = storage.read();
+	                objLayer.vertical += -1;
+	                storage.create(objLayer);
+	                container().css({'top' : objLayer.vertical });
 	            });
-	            
 	        },
-	        
 	        right : function (){
 	            $(document).bind('keydown', 'Shift+right', function () {
-	                horizontal += 1 * 10 ;
-	                container().css({'left': horizontal});
+	                objLayer = storage.read();
+	                objLayer.horizontal += 1 * 10;
+	                storage.create(objLayer);
+	                container().css({'left': objLayer.horizontal});
 	            });
-
 	        },
-	        
 	        down : function () {
 	            $(document).bind('keydown', 'Shift+down', function () {
-	                vertical += 1;
-	                container().css({'top': vertical});
+	                objLayer = storage.read();
+	                objLayer.vertical += 1;
+	                storage.create(objLayer);
+	                container().css({'top': objLayer.vertical});
 	            });
 	        },
 	        left : function () {
 	            $(document).bind('keydown', 'Shift+left', function () {
-	                horizontal -= 1;
-	                container().css({'left': horizontal});
+	                objLayer = storage.read();
+	                objLayer.horizontal -= 1;
+	                storage.create(objLayer);
+	                container().css({'left': objLayer.horizontal});
 	            });
-	        
 	        },
 	            
 	        init : function () {
@@ -3237,7 +3332,7 @@
 
 
 /***/ },
-/* 5 */
+/* 7 */
 /***/ function(module, exports) {
 
 	/*jslint browser: true*/
@@ -3448,13 +3543,12 @@
 
 
 /***/ },
-/* 6 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;'use strict';
-	!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(1), __webpack_require__(5)], __WEBPACK_AMD_DEFINE_RESULT__ = function($, hotkeys) {
-	    var opacity = 1;
-	    container = function () {
+	!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(1), __webpack_require__(7), __webpack_require__(4)], __WEBPACK_AMD_DEFINE_RESULT__ = function($, hotkeys, storage) {
+	    var objLayer, container = function () {
 	            return $('#container');
 	    },
 	    lockScroll = function () {
@@ -3466,28 +3560,31 @@
 	    return {
 	        up: function () {
 	            $(document).bind('keydown', 'Alt+up', function () {
+	                objLayer = storage.read();
 	                lockScroll();
-	                if (opacity >= 1) {
-	                    return 
+	                if (objLayer.opacity >= 1) {
+	                    return
 	                }
-	                opacity += 0.1
-	                container().css({'opacity': opacity});
+	                objLayer.opacity += 0.1
+	                storage.create(objLayer);
+	                container().css({'opacity': objLayer.opacity});
+	                unlockScroll();
 	            });
-	            
 	        },
-
 	        down : function () {
 	            $(document).bind('keydown', 'Alt+down', function () {
 	                lockScroll();
-	                if (opacity == 0.0 ) {
+	                objLayer = storage.read();
+	                if (objLayer.opacity == 0 ) {
 	                    return
 	                }
-	                opacity = opacity.toFixed(1);
-	                opacity -= 0.1;
-	                container().css({'opacity': opacity});
+	                objLayer.opacity = objLayer.opacity.toFixed(1);
+	                objLayer.opacity -= 0.1;
+	                storage.create(objLayer);
+	                container().css({'opacity': objLayer.opacity});
+	                unlockScroll();
 	            });
 	        },
-	        
 	        init: function () {
 	            this.up();
 	            this.down();

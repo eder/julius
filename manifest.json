@@ -1,23 +1,17 @@
 {
-    "name": "Julius",
+    "name": "Julius Layer",
     "description": "This app put image one layer on your HTML. To compare the layout with HTML created",
     "version": "0.1",
     "manifest_version": 2,
     "permissions": [
         "activeTab",
-        "tabs", "http://*/*", "https://*/*"
+        "tabs", "http://*/*", "https://*/*",
+        "storage"
     ],
     "browser_action": {
         "default_title": "Put URL image",
         "default_icon": "julius-16.png",
         "default_popup": "popup.html"
     },
-    "content_scripts": [
-	    {
-	        "matches": ["*://*/*"],
-	        "js": ["js/jquery.js"]
-	    }
-  	],
-    "icons": { "16": "julius-16.png", "128": "julius-128.png" },
-    "background_page": "window.html"
+    "icons": { "16": "julius-16.png", "128": "julius-128.png" }
 }

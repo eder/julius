@@ -11,8 +11,9 @@ module.exports = {
       __dirname
     ],
     alias: {
-      jQuery: 'js/jquery.js',
-      hotkeys: 'js/jquery.hotkey.js'
+      jQuery: 'js/vendors/jquery.js',
+      hotkeys: 'js/vendors/jquery.hotkey.js',
+      //htmlstorage: 'js/vendors/htmlStorage.js'
     }
   },
   output: {

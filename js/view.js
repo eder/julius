@@ -1,7 +1,6 @@
 'use strict';
 
-define(['jQuery'], function ($) {
-    
+define(['jQuery', 'js/storage' ], function ($, storage) {
     return {
         container : function () {
             var $body = $('body'),
@@ -13,28 +12,26 @@ define(['jQuery'], function ($) {
                 'height' : 'auto',
                 'position' : 'fixed',
                 'display': 'block',
-                'top': 0,
-                'left': 0,
+                'top':  storage.read().vertical,
+                'left': storage.read().horizontal,
                 'right': 0,
                 'margin': 'auto'
-            })
+            });
             $('#container').remove();
             $body.append(container);
         },
         insertImage : function () {
-           $('#container').html($('<img>',{
-               src: object.path
-           }));
-        },
-        centerContainer : function () {
-           var width =  $('#container > img').width();
-           $('#container').css({'width': width + 'px'});
+            $('#container').html($('<img>',{
+                src: storage.read().path
+            }));
         },
         init : function () {
+            if(object.path !== storage.read().path) {
+                 storage.create(object);
+            }
             this.container();
             this.insertImage();
-            this.centerContainer();
         }
-    }
+    };
 });
 

@@ -6,7 +6,7 @@ define(['jQuery'], function ($) {
 });
 
 define(['js/view', 'js/moveKeyboard', 'js/opacityKeyboard'], function (view, move, opacity) {
-    view.init();  
+    view.init();
     move.init();
     opacity.init();
 });

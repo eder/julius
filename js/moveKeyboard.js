@@ -1,39 +1,42 @@
 'use strict';
-define(['jQuery', 'hotkeys'], function($, hotkeys) {
-    var vertical = 0, horizontal = 0,
-        container = function () {
+define(['jQuery', 'hotkeys', 'js/storage'], function($, hotkeys, storage) {
+    var objLayer, container = function () {
             return $('#container');
         };
+      
 
     return {
         up : function () {
             $(document).bind('keydown', 'Shift+up', function () {
-                vertical += -1;
-                container().css({'top' : vertical });
+                objLayer = storage.read();
+                objLayer.vertical += -1;
+                storage.create(objLayer);
+                container().css({'top' : objLayer.vertical });
             });
-            
         },
-        
         right : function (){
             $(document).bind('keydown', 'Shift+right', function () {
-                horizontal += 1 * 10 ;
-                container().css({'left': horizontal});
+                objLayer = storage.read();
+                objLayer.horizontal += 1 * 10;
+                storage.create(objLayer);
+                container().css({'left': objLayer.horizontal});
             });
-
         },
-        
         down : function () {
             $(document).bind('keydown', 'Shift+down', function () {
-                vertical += 1;
-                container().css({'top': vertical});
+                objLayer = storage.read();
+                objLayer.vertical += 1;
+                storage.create(objLayer);
+                container().css({'top': objLayer.vertical});
             });
         },
         left : function () {
             $(document).bind('keydown', 'Shift+left', function () {
-                horizontal -= 1;
-                container().css({'left': horizontal});
+                objLayer = storage.read();
+                objLayer.horizontal -= 1;
+                storage.create(objLayer);
+                container().css({'left': objLayer.horizontal});
             });
-        
         },
             
         init : function () {

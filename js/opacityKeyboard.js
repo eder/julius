@@ -1,7 +1,6 @@
 'use strict';
-define(['jQuery', 'hotkeys'], function($, hotkeys) {
-    var opacity = 1;
-    container = function () {
+define(['jQuery', 'hotkeys', 'js/storage'], function($, hotkeys, storage) {
+    var objLayer, container = function () {
             return $('#container');
     },
     lockScroll = function () {
@@ -13,28 +12,31 @@ define(['jQuery', 'hotkeys'], function($, hotkeys) {
     return {
         up: function () {
             $(document).bind('keydown', 'Alt+up', function () {
+                objLayer = storage.read();
                 lockScroll();
-                if (opacity >= 1) {
-                    return 
+                if (objLayer.opacity >= 1) {
+                    return
                 }
-                opacity += 0.1
-                container().css({'opacity': opacity});
+                objLayer.opacity += 0.1
+                storage.create(objLayer);
+                container().css({'opacity': objLayer.opacity});
+                unlockScroll();
             });
-            
         },
-
         down : function () {
             $(document).bind('keydown', 'Alt+down', function () {
                 lockScroll();
-                if (opacity == 0.0 ) {
+                objLayer = storage.read();
+                if (objLayer.opacity == 0 ) {
                     return
                 }
-                opacity = opacity.toFixed(1);
-                opacity -= 0.1;
-                container().css({'opacity': opacity});
+                objLayer.opacity = objLayer.opacity.toFixed(1);
+                objLayer.opacity -= 0.1;
+                storage.create(objLayer);
+                container().css({'opacity': objLayer.opacity});
+                unlockScroll();
             });
         },
-        
         init: function () {
             this.up();
             this.down();

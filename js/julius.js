@@ -3171,8 +3171,12 @@
 	            }));
 	        },
 	        init : function () {
+	            if (!storage.read()) {
+	                storage.create(object);
+	            }
+
 	            if(object.path !== storage.read().path) {
-	                 storage.create(object);
+	                storage.create(object);
 	            }
 	            this.container();
 	            this.insertImage();
@@ -3197,17 +3201,18 @@
 	        },
 	        read: function () {
 	            var  result = $.localStorage.getItem(storage_name);
-	            console.log(result);
 	            return JSON.parse(result);
 	        },
 	        remove: function () {
-	            $.sessionStorage.removeItem(storage_name);
+	            $.localStorage.removeItem(storage_name);
 	        },
 	        isDiference: function (data) {
 	            var res = this.read(data);
 	             if (res) {
 	                return this.compareJSON(res, data);
-	             }
+	             } else {
+	                return true    
+	            }
 	        },
 	        compareJSON : function(oldValue, newValue) {
 	            for( index in newValue) {

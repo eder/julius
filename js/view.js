@@ -27,8 +27,12 @@ define(['jQuery', 'js/storage' ], function ($, storage) {
             }));
         },
         init : function () {
+            if (!storage.read()) {
+                storage.create(object);
+            }
+
             if(object.path !== storage.read().path) {
-                 storage.create(object);
+                storage.create(object);
             }
             this.container();
             this.insertImage();

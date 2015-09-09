@@ -8,19 +8,7 @@ var objLayer = {
     input: '#input-path'
 };
 
-
-
 document.addEventListener('DOMContentLoaded', function () {
-    $(defaults.button).on('click', function () {
-        var $input = $(defaults.input).val();
-        if (!$input) {
-            return;
-        }
-        objLayer.path = $input;
-        chrome.tabs.executeScript(null, {
-            code: 'var object = ' + JSON.stringify(objLayer)
-        }, function  () {
-            chrome.tabs.executeScript(null, {  file: 'js/julius.js'});
-        });
-    });
+    chrome.tabs.executeScript(null, {  file: 'js/julius.js'});
+    window.close();
 });

@@ -1,6 +1,7 @@
 'use strict';
+var Storage = require('js/Storage');
+ module.exports = new function() {
 
-define(['jQuery', 'js/storage' ], function ($, storage) {
     return {
         container : function () {
             var $body = $('body'),
@@ -12,11 +13,11 @@ define(['jQuery', 'js/storage' ], function ($, storage) {
                 'height' : 'auto',
                 'position' : 'fixed',
                 'display': 'block',
-                'top':  storage.read().vertical,
-                'left': storage.read().horizontal,
+                'top':  Storage.read().vertical,
+                'left': Storage.read().horizontal,
                 'right': 0,
                 'margin': 'auto',
-                'opacity': storage.read().opacity,
+                'opacity': Storage.read().opacity,
                 'z-index': 1000
             });
             $('#container').remove();
@@ -24,16 +25,16 @@ define(['jQuery', 'js/storage' ], function ($, storage) {
         },
         insertImage : function () {
             $('#container').html($('<img>',{
-                src: storage.read().path
+                src: Storage.read().path
             }));
         },
-        init : function () {
-            if (!storage.read()) {
-                storage.create(object);
+        init : function (object) {
+            if (!Storage.read()) {
+                Storage.create(object);
             }
 
-            if(object.path !== storage.read().path) {
-                storage.create(object);
+            if(object.path !== Storage.read().path) {
+                Storage.create(object);
             }
             this.container();
             this.insertImage();

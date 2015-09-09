@@ -5,8 +5,12 @@ define(['jQuery'], function ($) {
 
 });
 
-define(['js/view', 'js/moveKeyboard', 'js/opacityKeyboard'], function (view, move, opacity) {
-    view.init();
-    move.init();
-    opacity.init();
-});
+var Start = require('js/start');
+
+Start.init();
+
+//define(['js/view', 'js/moveKeyboard', 'js/opacityKeyboard'], function (view, move, opacity) {
+    //view.init();
+    //move.init();
+    //opacity.init();
+//});

@@ -19,5 +19,10 @@ module.exports = {
   output: {
     path: __dirname,
     filename: 'js/julius.js'
+  },
+  module: {
+    loaders: [
+        { test: /\.html$/, loader: 'handlebars-loader'}    
+    ]
   }
 };

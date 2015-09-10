@@ -1,13 +1,15 @@
 'use strict';
-define(['jQuery'], function ($) {
-    window.jQuery = $;
-    return window.jQuery;
+//var Start = require('js/start');
+var $ = require('jquery/src/core');
 
-});
+window.jQuery = $;
 
-var Start = require('js/start');
 
-Start.init();
+
+
+
+console.log(jQuery.fn.jquery)
+//Start.init();
 
 //define(['js/view', 'js/moveKeyboard', 'js/opacityKeyboard'], function (view, move, opacity) {
     //view.init();

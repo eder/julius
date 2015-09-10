@@ -1,4 +1,5 @@
 'use strict';
+var $ = require('jquery/src/core');
 var Storage = require('js/Storage');
  module.exports = new function() {
 
@@ -29,6 +30,7 @@ var Storage = require('js/Storage');
             }));
         },
         init : function (object) {
+            console.log(object);
             if (!Storage.read()) {
                 Storage.create(object);
             }
@@ -36,9 +38,9 @@ var Storage = require('js/Storage');
             if(object.path !== Storage.read().path) {
                 Storage.create(object);
             }
-            this.container();
+           this.container();
             this.insertImage();
         }
     };
-});
+};
 

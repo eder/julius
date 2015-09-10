@@ -22,7 +22,8 @@ module.exports = {
   },
   module: {
     loaders: [
-        { test: /\.html$/, loader: 'handlebars-loader'}    
+        { test: /\.html$/, loader: 'handlebars-loader'},
+        { test: /jquery\/src\/selector\.js$/, loader: 'amd-define-factory-patcher-loader' }
     ]
   }
 };

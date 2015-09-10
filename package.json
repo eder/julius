@@ -18,5 +18,10 @@
   "bugs": {
     "url": "https://github.com/eder/julius/issues"
   },
-  "homepage": "https://github.com/eder/julius"
+  "homepage": "https://github.com/eder/julius",
+  "devDependencies": {
+    "amd-define-factory-patcher-loader": "^1.0.0",
+    "jquery": "^2.1.4",
+    "sizzle": "^2.2.0"
+  }
 }

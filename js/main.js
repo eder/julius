@@ -1,18 +1,9 @@
 'use strict';
-//var Start = require('js/start');
-var $ = require('jquery/src/core');
+window.jQuery = window.$ =  require('jquery/dist/jquery');
+var Start   = require('js/start'),
+    Move    = require('js/moveKeyboard'),
+    Opacity = require('js/opacityKeyboard');
 
-window.jQuery = $;
-
-
-
-
-
-console.log(jQuery.fn.jquery)
-//Start.init();
-
-//define(['js/view', 'js/moveKeyboard', 'js/opacityKeyboard'], function (view, move, opacity) {
-    //view.init();
-    //move.init();
-    //opacity.init();
-//});
+Start.init();
+Move.init();
+Opacity.init();

@@ -1,5 +1,4 @@
 'use strict';
-var $ = require('jquery/src/core');
 var templateStart = require('js/templates/_start_screen.html');
 var View = require('js/view');
 

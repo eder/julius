@@ -1,5 +1,10 @@
 'use strict';
-define(['jQuery', 'hotkeys', 'js/storage'], function($, hotkeys, storage) {
+require('js/vendors/jquery.hotkey');
+var Storage = require('js/storage');
+
+
+
+module.exports = new function () {
     var objLayer, container = function () {
             return $('#container');
         };
@@ -8,33 +13,33 @@ define(['jQuery', 'hotkeys', 'js/storage'], function($, hotkeys, storage) {
     return {
         up : function () {
             $(document).bind('keydown', 'Shift+up', function () {
-                objLayer = storage.read();
+                objLayer = Storage.read();
                 objLayer.vertical += -1;
-                storage.create(objLayer);
+                Storage.create(objLayer);
                 container().css({'top' : objLayer.vertical });
             });
         },
         right : function (){
             $(document).bind('keydown', 'Shift+right', function () {
-                objLayer = storage.read();
+                objLayer = Storage.read();
                 objLayer.horizontal += 1 * 10;
-                storage.create(objLayer);
+                Storage.create(objLayer);
                 container().css({'left': objLayer.horizontal});
             });
         },
         down : function () {
             $(document).bind('keydown', 'Shift+down', function () {
-                objLayer = storage.read();
+                objLayer = Storage.read();
                 objLayer.vertical += 1;
-                storage.create(objLayer);
+                Storage.create(objLayer);
                 container().css({'top': objLayer.vertical});
             });
         },
         left : function () {
             $(document).bind('keydown', 'Shift+left', function () {
-                objLayer = storage.read();
+                objLayer = Storage.read();
                 objLayer.horizontal -= 1;
-                storage.create(objLayer);
+                Storage.create(objLayer);
                 container().css({'left': objLayer.horizontal});
             });
         },
@@ -46,4 +51,4 @@ define(['jQuery', 'hotkeys', 'js/storage'], function($, hotkeys, storage) {
             this.left();
         }
     }
-});
+};

@@ -1,5 +1,4 @@
 'use strict';
-var $ = require('js/vendors/jquery');
 var localStorage = require('js/vendors/htmlstorage');
 
 module.exports = new function () {
@@ -25,8 +24,8 @@ module.exports = new function () {
              return true;
         },
         compareJSON : function(oldValue, newValue) {
-            for( key in newValue) {
-                if(oldValue[key] !== newValue[key]) {
+            for( index in newValue) {
+                if(oldValue[index] !== newValue[index]) {
                     return true;
                 }
             }

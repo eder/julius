@@ -8,18 +8,34 @@ module.exports = new function () {
         "vertical":0,
         "path":"",
         "opacity": 1
-    };
+    }, self;
 
     return {
         init : function () {
+            self = this;
             this.render();
-            this.getPath();
+            this.closeScreen();
+            this.getImage();
         },
 
         render : function () {
+            if($('#julius-modal').length > 0) {
+                return;
+            }
             $('body').append(templateStart());
         },
-        getPath: function () {
+
+        removeScreen : function () {
+            $('#julius-modal').remove();
+        },
+
+        closeScreen : function () {
+            $('.julius-close--screen').on('click', function (e) {
+                e.preventDefault();
+                self.removeScreen();
+            });
+        },
+        getImage: function () {
             var $input = $('#input-path');
             $input.change(function () {
                 var files = !!this.files ? this.files : [];
@@ -30,14 +46,17 @@ module.exports = new function () {
                 if (/^image/.test( files[0].type)){ // only image file
                     var reader = new FileReader(); // instance of the FileReader
                     reader.readAsDataURL(files[0]); // read the local file
-                    reader.onloadend = function(){ // set image data as background of div
-                        objLayer.path = this.result;
-                        View.init(objLayer);
-                        $('#julius-modal').remove();
+                    reader.onloadend = function () { 
+                        self.setImage(this.result);
                     };
                 }
 
             });
+        },
+        setImage : function (image) {
+            objLayer.path = image;
+            View.init(objLayer);
+            this.removeScreen() 
         }
     };
 };

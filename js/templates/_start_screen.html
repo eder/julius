@@ -7,6 +7,7 @@
     border-radius: 4px;
     background-image: url('https://raw.githubusercontent.com/eder/julius/master/images/bg-popup.png');
     margin: 0 auto;
+    margin-top: 100px;
 }
 
 .julius-label {
@@ -27,6 +28,7 @@
 .julius-form {
     position: relative;
     top: 340px;
+    left: 20px;
 }
 
 .julius-button {
@@ -64,13 +66,24 @@
     top: 1px;
     z-index: 1000;
 }
+
+.julius-close--screen {
+    float: right;
+    font-size: 14px;
+    color: #000;
+    font-weight: bold;
+    padding: 10px;
+    display: block;
+
+}
 </style>
-<div id="julius-modal">
+<section id="julius-modal">
     <section class="julius-popup-container">
+        <a class="julius-close--screen" href="#">x</a>
         <form  class="julius-form">
                 <input  id="input-fake" class="julius-input">
                 <button id="button-send" class="julius-button"> Send </button>
                 <input class="julius-input-hide" id="input-path"  type="file">
         </form>
     </section>
-<div>
+<section>

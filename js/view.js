@@ -21,7 +21,7 @@ var Storage              = require('js/storage'),
                 'right': 0,
                 'margin': 'auto',
                 'opacity': Storage.read().opacity,
-                'z-index': 1000
+                'z-index': 9999999999
             });
         },
 

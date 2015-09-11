@@ -9361,7 +9361,7 @@
 
 	var Handlebars = __webpack_require__(4);
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-	    return "<style type=\"text/css\" media=\"screen\">\n    .julius-popup-container, .border-rounded {\n        width: 590px;\n        display: block;\n        height: 390px;\n        padding: 10px;\n        border-radius: 4px;\n        background-image: url('https://raw.githubusercontent.com/eder/julius/master/images/bg-popup.png');\n        margin: 0 auto;\n        margin-top: 100px;\n    }\n\n    .julius-label {\n        color: #777;\n        font-size: 14px;\n        padding: 10px;\n        display: inline-block;\n    }\n    .julius-input {\n        font-family: \"Arial\";\n        padding: 10px;\n        border-radius: 4px;\n        border: 1px solid #888;\n        font-size: 14px;\n        width: 400px;\n\n    }\n    .julius-form {\n        position: relative;\n        top: 340px;\n        left: 20px;\n    }\n\n    .julius-button {\n        border-radius: 4px;\n        border: 1px solid #888;\n        color: #F6F5F5;\n        background-color: rgb(60, 59, 59);\n        padding: 10px;\n        cursor: pointer;\n        font-size: small;\n        width: 200px;\n        box-shadow: 0px 2px 3px #918F8F;\n    }\n    .julius-input-hide {\n        position: absolute;\n        width: 200px;\n        height: 55px;\n        opacity: 0;\n        cursor: pointer;\n        top: -15px;\n    }\n\n    .julius-container-input_file {\n        position: relative;\n        top: -30px;\n        left: 50px;\n    }\n\n    #julius-modal {\n        position: absolute;\n        width: 100%;\n        height: 100%;\n        display: block;\n        background-color: rgba(0, 0, 0, 0.66);\n        top: 1px;\n        z-index: 1000;\n    }\n\n    .julius-close--screen {\n        float: right;\n        font-size: 14px;\n        color: #000;\n        font-weight: bold;\n        height: 8px;\n        width: 8px;\n        display: block;\n        text-decoration: none !important;\n        font-family: Arial;\n        line-height: 8px;\n        padding: 10px;\n    }\n    .julius-close--screen:hover {\n        color: #fff;\n        border-radius: 20px;\n        background-color: #ccc;\n        height: 8px;\n        width: 8px;\n    }\n</style>\n<section id=\"julius-modal\">\n    <section class=\"julius-popup-container\">\n        <a class=\"julius-close--screen\" href=\"#\">x</a>\n        <form  class=\"julius-form\">\n            <input title=\"Open Image\"  class=\"julius-input-hide\" id=\"input-path\"  type=\"file\">\n            <button title=\"Open Image\" id=\"button-send\" class=\"julius-button\"> \n                    Open image\n            </button>\n        </form>\n    </section>\n<section>\n";
+	    return "<style type=\"text/css\" media=\"screen\">\n    .julius-popup-container, .border-rounded {\n        width: 590px;\n        display: block;\n        height: 400px;\n        padding: 10px;\n        border-radius: 4px;\n        background-image: url('https://raw.githubusercontent.com/eder/julius/master/images/bg-popup.png');\n        margin: 0 auto;\n        margin-top: 100px;\n        z-index: 999999999999;\n    }\n\n    .julius-label {\n        color: #777;\n        font-size: 14px;\n        padding: 10px;\n        display: inline-block;\n    }\n    .julius-input {\n        font-family: \"Arial\";\n        padding: 10px;\n        border-radius: 4px;\n        border: 1px solid #888;\n        font-size: 14px;\n        width: 400px;\n\n    }\n    .julius-form {\n        position: relative;\n        top: 340px;\n        left: 20px;\n    }\n\n    .julius-button {\n        border-radius: 4px;\n        border: 1px solid #888;\n        color: #F6F5F5;\n        background-color: rgb(60, 59, 59);\n        padding: 10px;\n        cursor: pointer;\n        font-size: small;\n        width: 200px;\n        box-shadow: 0px 2px 3px #918F8F;\n        margin-bottom: 30px;\n    }\n    .julius-input-hide {\n        position: absolute;\n        width: 200px;\n        height: 55px;\n        opacity: 0;\n        cursor: pointer;\n        top: -15px;\n    }\n\n    .julius-container-input_file {\n        position: relative;\n        top: -30px;\n        left: 50px;\n    }\n\n    #julius-modal {\n        position: absolute;\n        width: 100%;\n        height: 100%;\n        display: block;\n        background-color: rgba(0, 0, 0, 0.66);\n        top: 1px;\n        z-index: 99999999999;\n    }\n\n    .julius-close--screen {\n        float: right;\n        font-size: 14px;\n        color: #000;\n        font-weight: bold;\n        height: 8px;\n        width: 8px;\n        display: block;\n        text-decoration: none !important;\n        font-family: Arial;\n        line-height: 8px;\n        padding: 10px;\n    }\n    .julius-close--screen:hover {\n        color: #fff;\n        border-radius: 20px;\n        background-color: #ccc;\n        height: 8px;\n        width: 8px;\n    }\n</style>\n<section id=\"julius-modal\">\n    <section class=\"julius-popup-container\">\n        <a class=\"julius-close--screen\" href=\"#\">x</a>\n        <form  class=\"julius-form\">\n            <input title=\"Open Image\"  class=\"julius-input-hide\" id=\"input-path\"  type=\"file\">\n            <button title=\"Open Image\" id=\"button-send\" class=\"julius-button\"> \n                    Open image\n            </button>\n        </form>\n    </section>\n<section>\n";
 	},"useData":true});
 
 /***/ },
@@ -10566,7 +10566,7 @@
 	                'right': 0,
 	                'margin': 'auto',
 	                'opacity': Storage.read().opacity,
-	                'z-index': 1000
+	                'z-index': 9999999999
 	            });
 	        },
 
@@ -13043,7 +13043,6 @@
 	             
 	            $(document).bind('keydown', 'Alt+up', function () {
 	                objLayer = Storage.read();
-	                self.lockKeyPress();
 	                if (objLayer.opacity >= 1) {
 	                    return
 	                }
@@ -13054,7 +13053,6 @@
 	        },
 	        down : function () {
 	            $(document).bind('keydown', 'Alt+down', function () {
-	                self.lockKeyPress();
 	                objLayer = Storage.read();
 	                if (objLayer.opacity == 0 ) {
 	                    return
@@ -13079,7 +13077,7 @@
 	        },
 	        
 	        init: function () {
-	            self = this;
+	            this.lockKeyPress();
 	            this.up();
 	            this.down();
 	        }

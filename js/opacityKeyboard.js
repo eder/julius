@@ -13,7 +13,6 @@ module.exports = new function () {
              
             $(document).bind('keydown', 'Alt+up', function () {
                 objLayer = Storage.read();
-                self.lockKeyPress();
                 if (objLayer.opacity >= 1) {
                     return
                 }
@@ -24,7 +23,6 @@ module.exports = new function () {
         },
         down : function () {
             $(document).bind('keydown', 'Alt+down', function () {
-                self.lockKeyPress();
                 objLayer = Storage.read();
                 if (objLayer.opacity == 0 ) {
                     return
@@ -49,7 +47,7 @@ module.exports = new function () {
         },
         
         init: function () {
-            self = this;
+            this.lockKeyPress();
             this.up();
             this.down();
         }

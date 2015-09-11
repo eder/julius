@@ -9303,11 +9303,17 @@
 	        },
 
 	        render : function () {
+	            var $body = $('body');
 	            if($(target.modal).length > 0) {
 	                return;
 	            }
 
-	            $('body').append(templateStart());
+	            $body.scrollTop();
+	            $body.append(templateStart());
+	            $(target.modal).css({
+	                width   : window.screen.width,
+	                height  : window.screen.height
+	            });
 	        },
 
 	        removeScreen : function () {
@@ -13028,32 +13034,27 @@
 	var Storage = __webpack_require__(24);
 
 	module.exports = new function () {
-	    var objLayer, container = function () {
+	    var  self, objLayer, container = function () {
 	            return $('#julius-layer-container');
-	    },
-	    lockScroll = function () {
-	        $('body').css({'overflow': 'hidden'});
-	    },
-	    unlockScroll = function () {
-	        $('body').css({'overflow': 'auto'});
 	    };
+
 	    return {
 	        up: function () {
+	             
 	            $(document).bind('keydown', 'Alt+up', function () {
 	                objLayer = Storage.read();
-	                lockScroll();
+	                self.lockKeyPress();
 	                if (objLayer.opacity >= 1) {
 	                    return
 	                }
 	                objLayer.opacity += 0.1
 	                Storage.create(objLayer);
 	                container().css({'opacity': objLayer.opacity});
-	                unlockScroll();
 	            });
 	        },
 	        down : function () {
 	            $(document).bind('keydown', 'Alt+down', function () {
-	                lockScroll();
+	                self.lockKeyPress();
 	                objLayer = Storage.read();
 	                if (objLayer.opacity == 0 ) {
 	                    return
@@ -13062,10 +13063,23 @@
 	                objLayer.opacity -= 0.1;
 	                Storage.create(objLayer);
 	                container().css({'opacity': objLayer.opacity});
-	                unlockScroll();
 	            });
 	        },
+	        
+	        lockKeyPress : function () {
+	            var ar=new Array(33,34,35,36,37,38,39,40);
+	            $(document).keydown(function(e) {
+	                var key = e.which;
+	                if($.inArray(key,ar) > -1) {
+	                    e.preventDefault();
+	                    return false;
+	                }
+	                return true;
+	            });
+	        },
+	        
 	        init: function () {
+	            self = this;
 	            this.up();
 	            this.down();
 	        }

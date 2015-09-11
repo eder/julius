@@ -26,11 +26,17 @@ module.exports = new function () {
         },
 
         render : function () {
+            var $body = $('body');
             if($(target.modal).length > 0) {
                 return;
             }
 
-            $('body').append(templateStart());
+            $body.scrollTop();
+            $body.append(templateStart());
+            $(target.modal).css({
+                width   : window.screen.width,
+                height  : window.screen.height
+            });
         },
 
         removeScreen : function () {

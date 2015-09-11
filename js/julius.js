@@ -46,11 +46,12 @@
 
 	'use strict';
 	window.jQuery = window.$ =  __webpack_require__(1);
-	var Start   = __webpack_require__(2),
+
+	var Screen   = __webpack_require__(35),
 	    Move    = __webpack_require__(32),
 	    Opacity = __webpack_require__(34);
 
-	Start.init();
+	Screen.init();
 	Move.init();
 	Opacity.init();
 
@@ -9272,96 +9273,13 @@
 
 
 /***/ },
-/* 2 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	var templateStart = __webpack_require__(3);
-	var View = __webpack_require__(23);
-
-	module.exports = new function () {
-	    var target = {
-	        modal       : '#julius-modal',
-	        buttonClose : '.julius-close--screen',
-	        input       : '#input-path',
-	        inputFake   : '#input-fake'
-	    };
-	    var objLayer = {
-	        "top":0,
-	        "left":0,
-	        "path":"",
-	        "opacity": 1,
-	        "fileName": ''
-	    }, self;
-
-	    return {
-	        init : function () {
-	            self = this;
-	            this.render();
-	            this.closeScreen();
-	            this.getImage();
-	        },
-
-	        render : function () {
-	            var $body = $('body');
-	            if($(target.modal).length > 0) {
-	                return;
-	            }
-
-	            $body.scrollTop();
-	            $body.append(templateStart());
-	            $(target.modal).css({
-	                width   : window.screen.width,
-	                height  : window.screen.height
-	            });
-	        },
-
-	        removeScreen : function () {
-	            $(target.modal).remove();
-	        },
-
-	        closeScreen : function () {
-	            $(target.buttonClose).on('click', function (e) {
-	                e.preventDefault();
-	                self.removeScreen();
-	            });
-	        },
-	        getImage: function () {
-	            var $input = $(target.input);
-	            $input.change(function () {
-	                var files = !!this.files ? this.files : [];
-	                // no file selected, or no FileReader support
-	                if (!files.length || !window.FileReader)  {
-	                    return;
-	                }
-	                if (/^image/.test( files[0].type)){        // only image file
-	                    var reader = new FileReader();       // instance of the FileReader
-	                    reader.readAsDataURL(files[0]);      // read the local file
-	                    reader.onloadend = function () { 
-	                        objLayer.fileName = files[0].name;
-	                        self.setImage(this.result);
-	                    };
-	                }
-
-	            });
-	        },
-	        setImage : function (image) {
-	            objLayer.path = image;
-	            View.init(objLayer);
-	            this.removeScreen();
-	        }
-	    };
-	};
-
-
-
-/***/ },
+/* 2 */,
 /* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Handlebars = __webpack_require__(4);
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-	    return "<style type=\"text/css\" media=\"screen\">\n    .julius-popup-container, .border-rounded {\n        width: 590px;\n        display: block;\n        height: 400px;\n        padding: 10px;\n        border-radius: 4px;\n        background-image: url('https://raw.githubusercontent.com/eder/julius/master/images/bg-popup.png');\n        margin: 0 auto;\n        margin-top: 100px;\n        z-index: 999999999999;\n    }\n\n    .julius-label {\n        color: #777;\n        font-size: 14px;\n        padding: 10px;\n        display: inline-block;\n    }\n    .julius-input {\n        font-family: \"Arial\";\n        padding: 10px;\n        border-radius: 4px;\n        border: 1px solid #888;\n        font-size: 14px;\n        width: 400px;\n\n    }\n    .julius-form {\n        position: relative;\n        top: 340px;\n        left: 20px;\n    }\n\n    .julius-button {\n        border-radius: 4px;\n        border: 1px solid #888;\n        color: #F6F5F5;\n        background-color: rgb(60, 59, 59);\n        padding: 10px;\n        cursor: pointer;\n        font-size: small;\n        width: 200px;\n        box-shadow: 0px 2px 3px #918F8F;\n        margin-bottom: 30px;\n    }\n    .julius-input-hide {\n        position: absolute;\n        width: 200px;\n        height: 55px;\n        opacity: 0;\n        cursor: pointer;\n        top: -15px;\n    }\n\n    .julius-container-input_file {\n        position: relative;\n        top: -30px;\n        left: 50px;\n    }\n\n    #julius-modal {\n        position: absolute;\n        width: 100%;\n        height: 100%;\n        display: block;\n        background-color: rgba(0, 0, 0, 0.66);\n        top: 1px;\n        z-index: 99999999999;\n    }\n\n    .julius-close--screen {\n        float: right;\n        font-size: 14px;\n        color: #000;\n        font-weight: bold;\n        height: 8px;\n        width: 8px;\n        display: block;\n        text-decoration: none !important;\n        font-family: Arial;\n        line-height: 8px;\n        padding: 10px;\n    }\n    .julius-close--screen:hover {\n        color: #fff;\n        border-radius: 20px;\n        background-color: #ccc;\n        height: 8px;\n        width: 8px;\n    }\n</style>\n<section id=\"julius-modal\">\n    <section class=\"julius-popup-container\">\n        <a class=\"julius-close--screen\" href=\"#\">x</a>\n        <form  class=\"julius-form\">\n            <input title=\"Open Image\"  class=\"julius-input-hide\" id=\"input-path\"  type=\"file\">\n            <button title=\"Open Image\" id=\"button-send\" class=\"julius-button\"> \n                    Open image\n            </button>\n        </form>\n    </section>\n<section>\n";
+	    return "<style type=\"text/css\" media=\"screen\">\n    .julius-popup-container, .border-rounded {\n        width: 590px;\n        display: block;\n        height: 400px;\n        padding: 10px;\n        border-radius: 4px;\n        background-image: url('https://raw.githubusercontent.com/eder/julius/master/images/bg-popup.png');\n        margin: 0 auto;\n        margin-top: 100px;\n        z-index: 999999999999;\n        position: relative;\n    }\n\n    .julius-label {\n        color: #777;\n        font-size: 14px;\n        padding: 10px;\n        display: inline-block;\n    }\n    .julius-input {\n        font-family: \"Arial\";\n        padding: 10px;\n        border-radius: 4px;\n        border: 1px solid #888;\n        font-size: 14px;\n        width: 400px;\n\n    }\n    .julius-form {\n        position: relative;\n        top: 340px;\n        left: 20px;\n    }\n\n    .julius-button {\n        border-radius: 4px;\n        border: 1px solid #888;\n        color: #F6F5F5;\n        background-color: rgb(60, 59, 59);\n        padding: 10px;\n        cursor: pointer;\n        font-size: small;\n        width: 200px;\n        box-shadow: 0px 2px 3px #918F8F;\n        margin-bottom: 30px;\n        float: right;\n    }\n    .julius-input-hide {\n        position: absolute;\n        width: 200px;\n        height: 55px;\n        opacity: 0;\n        cursor: pointer;\n        top: -15px;\n        left: 362px;\n    }\n\n    .julius-container-input_file {\n        position: relative;\n        top: -30px;\n        left: 50px;\n    }\n\n    #julius-modal {\n        position: absolute;\n        width: 100%;\n        height: 100%;\n        display: block;\n        background-color: rgba(0, 0, 0, 0.66);\n        top: 1px;\n        z-index: 99999999999;\n    }\n\n    .julius-close--screen {\n        float: right;\n        font-size: 14px;\n        color: #000;\n        font-weight: bold;\n        height: 8px;\n        width: 8px;\n        display: block;\n        text-decoration: none !important;\n        font-family: Arial;\n        line-height: 8px;\n        padding: 10px;\n    }\n    .julius-close--screen:hover {\n        color: #fff;\n        border-radius: 20px;\n        background-color: #ccc;\n        height: 8px;\n        width: 8px;\n    }\n    .julius-last-images {\n        position: absolute;\n        top: 260px;\n        left: -7px;\n        width: 140px;\n        text-align: center;\n    }\n    \n    .julius-last-images > img {\n        border-radius: 3px;\n        border: solid 1px #8B8A8A;\n        box-shadow: 1px 3px 5px #888888;\n        cursor: pointer;\n        width: 140px;\n\n    }\n    \n    .julius-last-images  > p {\n        line-height: 18px;\n        margin-top: 6px;\n        font-size: small;\n        color: #9E9E9E;\n        font-family: sans-serif;\n    }\n    \n\n</style>\n<section id=\"julius-modal\">\n    <section class=\"julius-popup-container\">\n        <a class=\"julius-close--screen\" href=\"#\">x</a>\n        <figure class=\"julius-last-images\">\n            <img src=\"http://sites-do-brasil.com/diretorio/thumbs/10506.jpg\">\n            <p> \n                Latest images used\n            </p>\n        </figure>\n        <form  class=\"julius-form\">\n            <input title=\"Open Image\"  class=\"julius-input-hide\" id=\"input-path\"  type=\"file\">\n            <button title=\"Open Image\" id=\"button-send\" class=\"julius-button\"> \n                    Open image\n            </button>\n        </form>\n    </section>\n<section>\n";
 	},"useData":true});
 
 /***/ },
@@ -13084,6 +13002,97 @@
 	    }
 
 	};
+
+
+/***/ },
+/* 35 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var templateStart = __webpack_require__(3);
+	var View    = __webpack_require__(23);
+	var Storage = __webpack_require__(24);
+
+	module.exports = new function () {
+	    var target = {
+	        modal       : '#julius-modal',
+	        buttonClose : '.julius-close--screen',
+	        input       : '#input-path',
+	        inputFake   : '#input-fake'
+	    };
+	    var objLayer = {
+	        "top":0,
+	        "left":0,
+	        "path":"",
+	        "opacity": 1,
+	        "fileName": ''
+	    }, self;
+
+	    return {
+	        init : function () {
+	            self = this;
+	            this.render();
+	            this.closeScreen();
+	            this.getImage();
+	        },
+
+	        render : function () {
+	            var $body = $('body');
+	            if($(target.modal).length > 0) {
+	                return;
+	            }
+
+	            $body.scrollTop();
+	            $body.append(templateStart());
+	            $(target.modal).css({
+	                width   : window.screen.width,
+	                height  : window.screen.height
+	            });
+	        },
+
+	        removeScreen : function () {
+	            $(target.modal).remove();
+	        },
+
+	        closeScreen : function () {
+	            $(target.buttonClose).on('click', function (e) {
+	                e.preventDefault();
+	                self.removeScreen();
+	            });
+	        },
+	        getImage: function () {
+	            var $input = $(target.input);
+	            $input.change(function () {
+	                var files = !!this.files ? this.files : [];
+	                // no file selected, or no FileReader support
+	                if (!files.length || !window.FileReader)  {
+	                    return;
+	                }
+	                if (/^image/.test( files[0].type)){        // only image file
+	                    var reader = new FileReader();       // instance of the FileReader
+	                    reader.readAsDataURL(files[0]);      // read the local file
+	                    reader.onloadend = function () { 
+	                        objLayer.fileName = files[0].name;
+	                        self.setImage(this.result);
+	                    };
+	                }
+
+	            });
+	        },
+	        setImage : function (image) {
+	            objLayer.path = image;
+	            View.init(objLayer);
+	            this.removeScreen();
+	        },
+	        lastImage : function () {
+	            if (!Storage.read()) {
+	                return;
+	            } 
+	            
+	        }
+	    };
+	};
+
 
 
 /***/ }

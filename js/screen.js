@@ -1,6 +1,7 @@
 'use strict';
 var templateStart = require('js/templates/_start_screen.html');
-var View = require('js/view');
+var View    = require('js/view');
+var Storage = require('js/storage');
 
 module.exports = new function () {
     var target = {
@@ -72,6 +73,12 @@ module.exports = new function () {
             objLayer.path = image;
             View.init(objLayer);
             this.removeScreen();
+        },
+        lastImage : function () {
+            if (!Storage.read()) {
+                return;
+            } 
+            
         }
     };
 };

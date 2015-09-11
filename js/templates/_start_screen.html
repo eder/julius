@@ -9,6 +9,7 @@
         margin: 0 auto;
         margin-top: 100px;
         z-index: 999999999999;
+        position: relative;
     }
 
     .julius-label {
@@ -43,6 +44,7 @@
         width: 200px;
         box-shadow: 0px 2px 3px #918F8F;
         margin-bottom: 30px;
+        float: right;
     }
     .julius-input-hide {
         position: absolute;
@@ -51,6 +53,7 @@
         opacity: 0;
         cursor: pointer;
         top: -15px;
+        left: 362px;
     }
 
     .julius-container-input_file {
@@ -89,10 +92,42 @@
         height: 8px;
         width: 8px;
     }
+    .julius-last-images {
+        position: absolute;
+        top: 260px;
+        left: -7px;
+        width: 140px;
+        text-align: center;
+    }
+    
+    .julius-last-images > img {
+        border-radius: 3px;
+        border: solid 1px #8B8A8A;
+        box-shadow: 1px 3px 5px #888888;
+        cursor: pointer;
+        width: 140px;
+
+    }
+    
+    .julius-last-images  > p {
+        line-height: 18px;
+        margin-top: 6px;
+        font-size: small;
+        color: #9E9E9E;
+        font-family: sans-serif;
+    }
+    
+
 </style>
 <section id="julius-modal">
     <section class="julius-popup-container">
         <a class="julius-close--screen" href="#">x</a>
+        <figure class="julius-last-images">
+            <img src="http://sites-do-brasil.com/diretorio/thumbs/10506.jpg">
+            <p> 
+                Latest images used
+            </p>
+        </figure>
         <form  class="julius-form">
             <input title="Open Image"  class="julius-input-hide" id="input-path"  type="file">
             <button title="Open Image" id="button-send" class="julius-button"> 

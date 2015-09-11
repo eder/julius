@@ -1,8 +1,9 @@
 'use strict';
+window.jQuery = window.$ =  require('jquery/dist/jquery');
 
-var Storage         = require('js/storage'),
-    Draggable       = require('js/dragMouse'),
-    LayerContainer  = require('js/templates/_layer_container.html');
+var Storage              = require('js/storage'),
+    Draggable            = require('js/dragMouse'),
+    LayerContainer       = require('js/templates/_layer_container.html');
 
  module.exports = new function() {
     var target = {
@@ -37,10 +38,10 @@ var Storage         = require('js/storage'),
         },
 
         init : function (object) {
-            if (!Storage.read()) {
+            if (!Storage.read() || object.path !== Storage.read().path ) {
                 Storage.create(object);
             }
-
+            
             this.render();
             this.layer();
             this.insertImage();

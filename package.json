@@ -20,9 +20,13 @@
   },
   "homepage": "https://github.com/eder/julius",
   "devDependencies": {
-    "amd-define-factory-patcher-loader": "^1.0.0",
     "jquery": "^2.1.4",
     "jquery-ui": "^1.10.5",
-    "sizzle": "^2.2.0"
+    "karma": "^0.13.9",
+    "karma-jasmine": "^0.3.6",
+    "karma-jasmine-jquery": "^0.1.1",
+    "karma-phantomjs-launcher": "^0.2.1",
+    "karma-webpack": "^1.7.0",
+    "phantomjs": "^1.9.18"
   }
 }

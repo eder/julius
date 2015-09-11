@@ -5,7 +5,7 @@ var Storage = require('js/storage');
 
 module.exports = new function () {
     var objLayer, container = function () {
-            return $('#container');
+            return $('#julius-layer-container');
     },
     lockScroll = function () {
         $('body').css({'overflow': 'hidden'});

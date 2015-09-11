@@ -3,11 +3,18 @@ var templateStart = require('js/templates/_start_screen.html');
 var View = require('js/view');
 
 module.exports = new function () {
+    var target = {
+        modal       : '#julius-modal',
+        buttonClose : '.julius-close--screen',
+        input       : '#input-path',
+        inputFake   : '#input-fake'
+    };
     var objLayer = {
-        "horizontal":0,
-        "vertical":0,
+        "top":0,
+        "left":0,
         "path":"",
-        "opacity": 1
+        "opacity": 1,
+        "fileName": ''
     }, self;
 
     return {
@@ -19,34 +26,36 @@ module.exports = new function () {
         },
 
         render : function () {
-            if($('#julius-modal').length > 0) {
+            if($(target.modal).length > 0) {
                 return;
             }
+
             $('body').append(templateStart());
         },
 
         removeScreen : function () {
-            $('#julius-modal').remove();
+            $(target.modal).remove();
         },
 
         closeScreen : function () {
-            $('.julius-close--screen').on('click', function (e) {
+            $(target.buttonClose).on('click', function (e) {
                 e.preventDefault();
                 self.removeScreen();
             });
         },
         getImage: function () {
-            var $input = $('#input-path');
+            var $input = $(target.input);
             $input.change(function () {
                 var files = !!this.files ? this.files : [];
                 // no file selected, or no FileReader support
                 if (!files.length || !window.FileReader)  {
                     return;
                 }
-                if (/^image/.test( files[0].type)){ // only image file
-                    var reader = new FileReader(); // instance of the FileReader
-                    reader.readAsDataURL(files[0]); // read the local file
+                if (/^image/.test( files[0].type)){        // only image file
+                    var reader = new FileReader();       // instance of the FileReader
+                    reader.readAsDataURL(files[0]);      // read the local file
                     reader.onloadend = function () { 
+                        objLayer.fileName = files[0].name;
                         self.setImage(this.result);
                     };
                 }
@@ -56,7 +65,7 @@ module.exports = new function () {
         setImage : function (image) {
             objLayer.path = image;
             View.init(objLayer);
-            this.removeScreen() 
+            this.removeScreen();
         }
     };
 };

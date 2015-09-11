@@ -1,45 +1,48 @@
 'use strict';
-var Storage = require('js/storage');
+
+var Storage         = require('js/storage'),
+    Draggable       = require('js/dragMouse'),
+    LayerContainer  = require('js/templates/_layer_container.html');
+
  module.exports = new function() {
+    var target = {
+        layer : '#julius-layer-container',
+        body  : 'body'
+    };
 
     return {
-        container : function () {
-            var $body = $('body'),
-                container = $('<div />', {
-                    id: 'container'
-                });
-            $(container).css({
-                'width' : 'auto',
-                'height' : 'auto',
+        layer : function () {
+            $(target.layer).css({
                 'position' : 'fixed',
                 'display': 'block',
-                'top':  Storage.read().vertical,
-                'left': Storage.read().horizontal,
+                'top':  Storage.read().top,
+                'left': Storage.read().left,
                 'right': 0,
                 'margin': 'auto',
                 'opacity': Storage.read().opacity,
                 'z-index': 1000
             });
-            $('#container').remove();
-            $body.append(container);
         },
+
+        render : function () {
+            $(target.body).append(LayerContainer());
+        },
+
         insertImage : function () {
-            $('#container').html($('<img>',{
+            $(target.layer).html($('<img>',{
                 src: Storage.read().path
             }));
         },
+
         init : function (object) {
-            console.log(object);
             if (!Storage.read()) {
                 Storage.create(object);
             }
 
-            if(object.path !== Storage.read().path) {
-                Storage.create(object);
-            }
-            this.container();
+            this.render();
+            this.layer();
             this.insertImage();
+            Draggable.init();
         }
     };
 };
-

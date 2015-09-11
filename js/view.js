@@ -32,6 +32,8 @@ var Storage         = require('js/storage'),
             $(target.layer).html($('<img>',{
                 src: Storage.read().path
             }));
+            var width =  $(target.layer + ' img').width();
+            $(target.layer).css({'width': width})
         },
 
         init : function (object) {

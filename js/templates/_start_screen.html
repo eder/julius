@@ -34,23 +34,22 @@
     .julius-button {
         border-radius: 4px;
         border: 1px solid #888;
-        color: #888;
-        font-size: 14px;
-        background-color: #fff;
+        color: #F6F5F5;
+        background-color: rgb(60, 59, 59);
         padding: 10px;
         cursor: pointer;
+        font-size: small;
+        width: 200px;
+        box-shadow: 0px 2px 3px #918F8F;
     }
     .julius-input-hide {
-        position: relative;
-        left: -60px;
-        display: inline-block;
-        width: 55px;
-        height: 56px;
-        top: -30px;
+        position: absolute;
+        width: 200px;
+        height: 40px;
         opacity: 0;
         cursor: pointer;
-
     }
+
     .julius-container-input_file {
         position: relative;
         top: -30px;
@@ -82,9 +81,10 @@
     <section class="julius-popup-container">
         <a class="julius-close--screen" href="#">x</a>
         <form  class="julius-form">
-                <input  id="input-fake" class="julius-input">
-                <button id="button-send" class="julius-button"> Send </button>
-                <input class="julius-input-hide" id="input-path"  type="file">
+            <input title="Open Image"  class="julius-input-hide" id="input-path"  type="file">
+            <button title="Open Image" id="button-send" class="julius-button"> 
+                    Open image
+            </button>
         </form>
     </section>
 <section>

@@ -47,8 +47,8 @@
 	'use strict';
 	window.jQuery = window.$ =  __webpack_require__(1);
 	var Start   = __webpack_require__(2),
-	    Move    = __webpack_require__(30),
-	    Opacity = __webpack_require__(32);
+	    Move    = __webpack_require__(32),
+	    Opacity = __webpack_require__(34);
 
 	Start.init();
 	Move.init();
@@ -9355,7 +9355,7 @@
 
 	var Handlebars = __webpack_require__(4);
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-	    return "<style type=\"text/css\" media=\"screen\">\n    .julius-popup-container, .border-rounded {\n        width: 590px;\n        display: block;\n        height: 390px;\n        padding: 10px;\n        border-radius: 4px;\n        background-image: url('https://raw.githubusercontent.com/eder/julius/master/images/bg-popup.png');\n        margin: 0 auto;\n        margin-top: 100px;\n    }\n\n    .julius-label {\n        color: #777;\n        font-size: 14px;\n        padding: 10px;\n        display: inline-block;\n    }\n    .julius-input {\n        font-family: \"Arial\";\n        padding: 10px;\n        border-radius: 4px;\n        border: 1px solid #888;\n        font-size: 14px;\n        width: 400px;\n\n    }\n    .julius-form {\n        position: relative;\n        top: 340px;\n        left: 20px;\n    }\n\n    .julius-button {\n        border-radius: 4px;\n        border: 1px solid #888;\n        color: #888;\n        font-size: 14px;\n        background-color: #fff;\n        padding: 10px;\n        cursor: pointer;\n    }\n    .julius-input-hide {\n        position: relative;\n        left: -60px;\n        display: inline-block;\n        width: 55px;\n        height: 56px;\n        top: -30px;\n        opacity: 0;\n        cursor: pointer;\n\n    }\n    .julius-container-input_file {\n        position: relative;\n        top: -30px;\n        left: 50px;\n    }\n\n    #julius-modal {\n        position: absolute;\n        width: 100%;\n        height: 100%;\n        display: block;\n        background-color: rgba(0, 0, 0, 0.66);\n        top: 1px;\n        z-index: 1000;\n    }\n\n    .julius-close--screen {\n        float: right;\n        font-size: 14px;\n        color: #000;\n        font-weight: bold;\n        padding: 10px;\n        display: block;\n        text-decoration: none;\n        font-family: Arial;\n    }\n</style>\n<section id=\"julius-modal\">\n    <section class=\"julius-popup-container\">\n        <a class=\"julius-close--screen\" href=\"#\">x</a>\n        <form  class=\"julius-form\">\n                <input  id=\"input-fake\" class=\"julius-input\">\n                <button id=\"button-send\" class=\"julius-button\"> Send </button>\n                <input class=\"julius-input-hide\" id=\"input-path\"  type=\"file\">\n        </form>\n    </section>\n<section>\n";
+	    return "<style type=\"text/css\" media=\"screen\">\n    .julius-popup-container, .border-rounded {\n        width: 590px;\n        display: block;\n        height: 390px;\n        padding: 10px;\n        border-radius: 4px;\n        background-image: url('https://raw.githubusercontent.com/eder/julius/master/images/bg-popup.png');\n        margin: 0 auto;\n        margin-top: 100px;\n    }\n\n    .julius-label {\n        color: #777;\n        font-size: 14px;\n        padding: 10px;\n        display: inline-block;\n    }\n    .julius-input {\n        font-family: \"Arial\";\n        padding: 10px;\n        border-radius: 4px;\n        border: 1px solid #888;\n        font-size: 14px;\n        width: 400px;\n\n    }\n    .julius-form {\n        position: relative;\n        top: 340px;\n        left: 20px;\n    }\n\n    .julius-button {\n        border-radius: 4px;\n        border: 1px solid #888;\n        color: #F6F5F5;\n        background-color: rgb(60, 59, 59);\n        padding: 10px;\n        cursor: pointer;\n        font-size: small;\n        width: 200px;\n        box-shadow: 0px 2px 3px #918F8F;\n    }\n    .julius-input-hide {\n        position: absolute;\n        width: 200px;\n        height: 40px;\n        opacity: 0;\n        cursor: pointer;\n    }\n\n    .julius-container-input_file {\n        position: relative;\n        top: -30px;\n        left: 50px;\n    }\n\n    #julius-modal {\n        position: absolute;\n        width: 100%;\n        height: 100%;\n        display: block;\n        background-color: rgba(0, 0, 0, 0.66);\n        top: 1px;\n        z-index: 1000;\n    }\n\n    .julius-close--screen {\n        float: right;\n        font-size: 14px;\n        color: #000;\n        font-weight: bold;\n        padding: 10px;\n        display: block;\n        text-decoration: none;\n        font-family: Arial;\n    }\n</style>\n<section id=\"julius-modal\">\n    <section class=\"julius-popup-container\">\n        <a class=\"julius-close--screen\" href=\"#\">x</a>\n        <form  class=\"julius-form\">\n            <input title=\"Open Image\"  class=\"julius-input-hide\" id=\"input-path\"  type=\"file\">\n            <button title=\"Open Image\" id=\"button-send\" class=\"julius-button\"> \n                    Open image\n            </button>\n        </form>\n    </section>\n<section>\n";
 	},"useData":true});
 
 /***/ },
@@ -10540,8 +10540,8 @@
 	'use strict';
 
 	var Storage         = __webpack_require__(24),
-	    Draggable       = __webpack_require__(34),
-	    LayerContainer  = __webpack_require__(33);
+	    Draggable       = __webpack_require__(26),
+	    LayerContainer  = __webpack_require__(31);
 
 	 module.exports = new function() {
 	    var target = {
@@ -10571,6 +10571,8 @@
 	            $(target.layer).html($('<img>',{
 	                src: Storage.read().path
 	            }));
+	            var width =  $(target.layer + ' img').width();
+	            $(target.layer).css({'width': width})
 	        },
 
 	        init : function (object) {
@@ -10688,10 +10690,47 @@
 /* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var jQuery = __webpack_require__(1);
+	'use strict';
 	__webpack_require__(27);
+	var Storage = __webpack_require__(24);
+	var target = {
+	    layer : '#julius-layer-container',
+	};
+	var layerPosition, self;
+
+	module.exports = new function () {
+	    return {
+	        draggable: function () {
+	            self = this;
+	            $(target.layer).draggable({
+	                drag: function(event, ui ) {
+	                    self.registerPosition(ui);
+	               }
+	            });
+	        },
+
+	        registerPosition : function (data) {
+	            layerPosition = Storage.read();
+	            layerPosition.top   = data.position.top;
+	            layerPosition.left  = data.position.left;
+	            Storage.create(layerPosition);
+	        },
+
+	        init : function () {
+	            this.draggable();
+	        }
+	    }
+	};
+
+
+/***/ },
+/* 27 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var jQuery = __webpack_require__(1);
 	__webpack_require__(28);
 	__webpack_require__(29);
+	__webpack_require__(30);
 
 	/*!
 	 * jQuery UI Draggable 1.10.4
@@ -11654,7 +11693,7 @@
 
 
 /***/ },
-/* 27 */
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var jQuery = __webpack_require__(1);
@@ -11982,11 +12021,11 @@
 
 
 /***/ },
-/* 28 */
+/* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var jQuery = __webpack_require__(1);
-	__webpack_require__(29);
+	__webpack_require__(30);
 
 	/*!
 	 * jQuery UI Mouse 1.10.4
@@ -12160,7 +12199,7 @@
 
 
 /***/ },
-/* 29 */
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var jQuery = __webpack_require__(1);
@@ -12689,11 +12728,20 @@
 
 
 /***/ },
-/* 30 */
+/* 31 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Handlebars = __webpack_require__(4);
+	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+	    return "<style type=\"text/css\">\n    .ui-draggable-dragging{\n        box-shadow: rgba(22, 47, 172, 0.89) -4px -4px 29px;\n        opacity: 0.5 !important;\n        cursor: move;\n    }\n\n</style>\n<section id=\"julius-layer-container\">\n</section>\n";
+	},"useData":true});
+
+/***/ },
+/* 32 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	__webpack_require__(31);
+	__webpack_require__(33);
 	var Storage = __webpack_require__(24);
 
 	module.exports = new function () {
@@ -12759,7 +12807,7 @@
 
 
 /***/ },
-/* 31 */
+/* 33 */
 /***/ function(module, exports) {
 
 	/*jslint browser: true*/
@@ -12970,12 +13018,12 @@
 
 
 /***/ },
-/* 32 */
+/* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	__webpack_require__(31);
+	__webpack_require__(33);
 	var Storage = __webpack_require__(24);
 
 	module.exports = new function () {
@@ -13022,52 +13070,6 @@
 	        }
 	    }
 
-	};
-
-
-/***/ },
-/* 33 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var Handlebars = __webpack_require__(4);
-	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-	    return "<style type=\"text/css\">\n    .ui-draggable-dragging{\n        box-shadow: rgba(22, 47, 172, 0.89) -4px -4px 29px;\n        opacity: 0.5 !important;\n        cursor: move;\n    }\n\n</style>\n<section id=\"julius-layer-container\">\n</section>\n";
-	},"useData":true});
-
-/***/ },
-/* 34 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	__webpack_require__(26);
-	var Storage = __webpack_require__(24);
-	var target = {
-	    layer : '#julius-layer-container',
-	};
-	var layerPosition, self;
-
-	module.exports = new function () {
-	    return {
-	        draggable: function () {
-	            self = this;
-	            $(target.layer).draggable({
-	                drag: function(event, ui ) {
-	                    self.registerPosition(ui);
-	               }
-	            });
-	        },
-
-	        registerPosition : function (data) {
-	            layerPosition = Storage.read();
-	            layerPosition.top   = data.position.top;
-	            layerPosition.left  = data.position.left;
-	            Storage.create(layerPosition);
-	        },
-
-	        init : function () {
-	            this.draggable();
-	        }
-	    }
 	};
 
 

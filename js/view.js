@@ -1,43 +1,51 @@
 'use strict';
+window.jQuery = window.$ =  require('jquery/dist/jquery');
 
-define(['jQuery', 'js/storage' ], function ($, storage) {
+var Storage              = require('js/storage'),
+    Draggable            = require('js/dragMouse'),
+    LayerContainer       = require('js/templates/_layer_container.html');
+
+ module.exports = new function() {
+    var target = {
+        layer : '#julius-layer-container',
+        body  : 'body'
+    };
+
     return {
-        container : function () {
-            var $body = $('body'),
-                container = $('<div />', {
-                    id: 'container'
-                });
-            $(container).css({
-                'width' : 'auto',
-                'height' : 'auto',
+        layer : function () {
+            $(target.layer).css({
                 'position' : 'fixed',
                 'display': 'block',
-                'top':  storage.read().vertical,
-                'left': storage.read().horizontal,
+                'top':  Storage.read().top,
+                'left': Storage.read().left,
                 'right': 0,
                 'margin': 'auto',
-                'opacity': storage.read().opacity,
+                'opacity': Storage.read().opacity,
                 'z-index': 1000
             });
-            $('#container').remove();
-            $body.append(container);
         },
-        insertImage : function () {
-            $('#container').html($('<img>',{
-                src: storage.read().path
-            }));
-        },
-        init : function () {
-            if (!storage.read()) {
-                storage.create(object);
-            }
 
-            if(object.path !== storage.read().path) {
-                storage.create(object);
+        render : function () {
+            $(target.body).append(LayerContainer());
+        },
+
+        insertImage : function () {
+            $(target.layer).html($('<img>',{
+                src: Storage.read().path
+            }));
+            var width =  $(target.layer + ' img').width();
+            $(target.layer).css({'width': width})
+        },
+
+        init : function (object) {
+            if (!Storage.read() || object.path !== Storage.read().path ) {
+                Storage.create(object);
             }
-            this.container();
+            
+            this.render();
+            this.layer();
             this.insertImage();
+            Draggable.init();
         }
     };
-});
-
+};

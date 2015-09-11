@@ -19,5 +19,11 @@ module.exports = {
   output: {
     path: __dirname,
     filename: 'js/julius.js'
+  },
+  module: {
+    loaders: [
+        { test: /\.html$/, loader: 'handlebars-loader'},
+        { test: /jquery\/src\/selector\.js$/, loader: 'amd-define-factory-patcher-loader' }
+    ]
   }
 };

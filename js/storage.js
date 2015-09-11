@@ -1,5 +1,7 @@
 'use strict';
-define(['jQuery','js/vendors/htmlstorage'], function ($, htmlstorage) {
+var localStorage = require('js/vendors/htmlstorage');
+
+module.exports = new function () {
     var storage_name = 'juliusLayer', index;
     return {
         create: function (data) {
@@ -16,11 +18,10 @@ define(['jQuery','js/vendors/htmlstorage'], function ($, htmlstorage) {
         },
         isDiference: function (data) {
             var res = this.read(data);
-             if (res) {
+            if (res) {
                 return this.compareJSON(res, data);
-             } else {
-                return true    
-            }
+             }
+             return true;
         },
         compareJSON : function(oldValue, newValue) {
             for( index in newValue) {
@@ -30,4 +31,4 @@ define(['jQuery','js/vendors/htmlstorage'], function ($, htmlstorage) {
             }
         }
     };
-});
+};

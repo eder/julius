@@ -1,7 +1,11 @@
 'use strict';
-define(['jQuery', 'hotkeys', 'js/storage'], function($, hotkeys, storage) {
+
+require('js/vendors/jquery.hotkey');
+var Storage = require('js/storage');
+
+module.exports = new function () {
     var objLayer, container = function () {
-            return $('#container');
+            return $('#julius-layer-container');
     },
     lockScroll = function () {
         $('body').css({'overflow': 'hidden'});
@@ -12,13 +16,13 @@ define(['jQuery', 'hotkeys', 'js/storage'], function($, hotkeys, storage) {
     return {
         up: function () {
             $(document).bind('keydown', 'Alt+up', function () {
-                objLayer = storage.read();
+                objLayer = Storage.read();
                 lockScroll();
                 if (objLayer.opacity >= 1) {
                     return
                 }
                 objLayer.opacity += 0.1
-                storage.create(objLayer);
+                Storage.create(objLayer);
                 container().css({'opacity': objLayer.opacity});
                 unlockScroll();
             });
@@ -26,13 +30,13 @@ define(['jQuery', 'hotkeys', 'js/storage'], function($, hotkeys, storage) {
         down : function () {
             $(document).bind('keydown', 'Alt+down', function () {
                 lockScroll();
-                objLayer = storage.read();
+                objLayer = Storage.read();
                 if (objLayer.opacity == 0 ) {
                     return
                 }
                 objLayer.opacity = objLayer.opacity.toFixed(1);
                 objLayer.opacity -= 0.1;
-                storage.create(objLayer);
+                Storage.create(objLayer);
                 container().css({'opacity': objLayer.opacity});
                 unlockScroll();
             });
@@ -43,4 +47,4 @@ define(['jQuery', 'hotkeys', 'js/storage'], function($, hotkeys, storage) {
         }
     }
 
-});
+};

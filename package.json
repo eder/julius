@@ -2,10 +2,10 @@
   "name": "Julius",
   "version": "0.0.1",
   "description": "Julius",
-  "main": "gulpfile.js",
+  "main": "js/julius.js",
   "dependencies": {
-    "gulp": "^3.8.11",
-    "gulp-watch": "^4.3.3",
+    "handlebars": "^4.0.2",
+    "handlebars-loader": "^1.1.4",
     "webpack": "^1.10.1",
     "webpack-stream": "^2.0.0"
   },
@@ -18,5 +18,15 @@
   "bugs": {
     "url": "https://github.com/eder/julius/issues"
   },
-  "homepage": "https://github.com/eder/julius"
+  "homepage": "https://github.com/eder/julius",
+  "devDependencies": {
+    "jquery": "^2.1.4",
+    "jquery-ui": "^1.10.5",
+    "karma": "^0.13.9",
+    "karma-jasmine": "^0.3.6",
+    "karma-jasmine-jquery": "^0.1.1",
+    "karma-phantomjs-launcher": "^0.2.1",
+    "karma-webpack": "^1.7.0",
+    "phantomjs": "^1.9.18"
+  }
 }

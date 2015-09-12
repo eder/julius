@@ -1,10 +1,21 @@
 <style type="text/css">
+    #julius-layer-container {
+        position: fixed;
+        display: block;
+        right: 0;
+        margin: auto;
+        z-index: 9999999999;
+        top: {{top}}px;
+        left: {{left}}px;
+        opacity: {{opacity}};
+    }
+
     .ui-draggable-dragging{
         box-shadow: rgba(22, 47, 172, 0.89) -4px -4px 29px;
         opacity: 0.5 !important;
         cursor: move;
     }
-
 </style>
 <section id="julius-layer-container">
+    <img src="{{path}}">
 </section>

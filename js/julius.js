@@ -47,7 +47,7 @@
 	'use strict';
 	window.jQuery = window.$ =  __webpack_require__(1);
 
-	var Screen   = __webpack_require__(35),
+	var Screen   = __webpack_require__(2),
 	    Move    = __webpack_require__(32),
 	    Opacity = __webpack_require__(34);
 
@@ -9273,13 +9273,116 @@
 
 
 /***/ },
-/* 2 */,
+/* 2 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var templateStart       = __webpack_require__(3);
+	var templateLatestImage = __webpack_require__(35);
+	var View    = __webpack_require__(23);
+	var Storage = __webpack_require__(24);
+
+	module.exports = new function () {
+	    var target = {
+	        modal       : '#julius-modal',
+	        buttonClose : '.julius-close--screen',
+	        lastImage   : '.julius-last-images',
+	        popup : '.julius-popup-container',
+	        input       : '#input-path',
+	        inputFake   : '#input-fake'
+	    };
+	    var objLayer = {
+	        "top":0,
+	        "left":0,
+	        "path":"",
+	        "opacity": 1,
+	        "fileName": ''
+	    }, self;
+
+	    return {
+
+	        render : function () {
+	            var $body = $('body');
+	            if($(target.modal).length > 0) {
+	                return;
+	            }
+
+	            $body.scrollTop();
+	            $body.append(templateStart());
+	            $(target.modal).css({
+	                width   : window.screen.width,
+	                height  : window.screen.height
+	            });
+	        },
+
+	        removeScreen : function () {
+	            $(target.modal).remove();
+	        },
+
+	        closeScreen : function () {
+	            $(target.buttonClose).on('click', function (e) {
+	                e.preventDefault();
+	                self.removeScreen();
+	            });
+	        },
+
+	        getImage: function () {
+	            var $input = $(target.input);
+	            $input.change(function () {
+	                var files = !!this.files ? this.files : [];
+	                // no file selected, or no FileReader support
+	                if (!files.length || !window.FileReader)  {
+	                    return;
+	                }
+	                if (/^image/.test( files[0].type)){        // only image file
+	                    var reader = new FileReader();       // instance of the FileReader
+	                    reader.readAsDataURL(files[0]);      // read the local file
+	                    reader.onloadend = function () { 
+	                        objLayer.fileName = files[0].name;
+	                        self.setImage(this.result);
+	                    };
+	                }
+	            });
+	        },
+
+	        setImage : function (image) {
+	            objLayer.path = image;
+	            View.init(objLayer);
+	            this.removeScreen();
+	        },
+
+	        lastImage : function () {
+	            if (!Storage.read()) {
+	                return;
+	            }
+	            $(target.popup).append(templateLatestImage(Storage.read()));
+
+	            $(target.lastImage).on('click', function (e) {
+	                e.preventDefault();
+	                View.render(Storage.read());
+	                self.removeScreen();
+	            });
+	        },
+
+	        init : function () {
+	            self = this;
+	            this.render();
+	            this.closeScreen();
+	            this.getImage();
+	            this.lastImage();
+	        },
+	    };
+	};
+
+
+
+/***/ },
 /* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Handlebars = __webpack_require__(4);
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-	    return "<style type=\"text/css\" media=\"screen\">\n    .julius-popup-container, .border-rounded {\n        width: 590px;\n        display: block;\n        height: 400px;\n        padding: 10px;\n        border-radius: 4px;\n        background-image: url('https://raw.githubusercontent.com/eder/julius/master/images/bg-popup.png');\n        margin: 0 auto;\n        margin-top: 100px;\n        z-index: 999999999999;\n        position: relative;\n    }\n\n    .julius-label {\n        color: #777;\n        font-size: 14px;\n        padding: 10px;\n        display: inline-block;\n    }\n    .julius-input {\n        font-family: \"Arial\";\n        padding: 10px;\n        border-radius: 4px;\n        border: 1px solid #888;\n        font-size: 14px;\n        width: 400px;\n\n    }\n    .julius-form {\n        position: relative;\n        top: 340px;\n        left: 20px;\n    }\n\n    .julius-button {\n        border-radius: 4px;\n        border: 1px solid #888;\n        color: #F6F5F5;\n        background-color: rgb(60, 59, 59);\n        padding: 10px;\n        cursor: pointer;\n        font-size: small;\n        width: 200px;\n        box-shadow: 0px 2px 3px #918F8F;\n        margin-bottom: 30px;\n        float: right;\n    }\n    .julius-input-hide {\n        position: absolute;\n        width: 200px;\n        height: 55px;\n        opacity: 0;\n        cursor: pointer;\n        top: -15px;\n        left: 362px;\n    }\n\n    .julius-container-input_file {\n        position: relative;\n        top: -30px;\n        left: 50px;\n    }\n\n    #julius-modal {\n        position: absolute;\n        width: 100%;\n        height: 100%;\n        display: block;\n        background-color: rgba(0, 0, 0, 0.66);\n        top: 1px;\n        z-index: 99999999999;\n    }\n\n    .julius-close--screen {\n        float: right;\n        font-size: 14px;\n        color: #000;\n        font-weight: bold;\n        height: 8px;\n        width: 8px;\n        display: block;\n        text-decoration: none !important;\n        font-family: Arial;\n        line-height: 8px;\n        padding: 10px;\n    }\n    .julius-close--screen:hover {\n        color: #fff;\n        border-radius: 20px;\n        background-color: #ccc;\n        height: 8px;\n        width: 8px;\n    }\n    .julius-last-images {\n        position: absolute;\n        top: 260px;\n        left: -7px;\n        width: 140px;\n        text-align: center;\n    }\n    \n    .julius-last-images > img {\n        border-radius: 3px;\n        border: solid 1px #8B8A8A;\n        box-shadow: 1px 3px 5px #888888;\n        cursor: pointer;\n        width: 140px;\n\n    }\n    \n    .julius-last-images  > p {\n        line-height: 18px;\n        margin-top: 6px;\n        font-size: small;\n        color: #9E9E9E;\n        font-family: sans-serif;\n    }\n    \n\n</style>\n<section id=\"julius-modal\">\n    <section class=\"julius-popup-container\">\n        <a class=\"julius-close--screen\" href=\"#\">x</a>\n        <figure class=\"julius-last-images\">\n            <img src=\"http://sites-do-brasil.com/diretorio/thumbs/10506.jpg\">\n            <p> \n                Latest images used\n            </p>\n        </figure>\n        <form  class=\"julius-form\">\n            <input title=\"Open Image\"  class=\"julius-input-hide\" id=\"input-path\"  type=\"file\">\n            <button title=\"Open Image\" id=\"button-send\" class=\"julius-button\"> \n                    Open image\n            </button>\n        </form>\n    </section>\n<section>\n";
+	    return "<style type=\"text/css\" media=\"screen\">\n    .julius-popup-container, .border-rounded {\n        width: 590px;\n        display: block;\n        height: 400px;\n        padding: 10px;\n        border-radius: 4px;\n        background-image: url('https://raw.githubusercontent.com/eder/julius/master/images/bg-popup.png');\n        margin: 0 auto;\n        margin-top: 100px;\n        z-index: 999999999999;\n        position: relative;\n    }\n\n    .julius-label {\n        color: #777;\n        font-size: 14px;\n        padding: 10px;\n        display: inline-block;\n    }\n    .julius-input {\n        font-family: \"Arial\";\n        padding: 10px;\n        border-radius: 4px;\n        border: 1px solid #888;\n        font-size: 14px;\n        width: 400px;\n\n    }\n    .julius-form {\n        position: relative;\n        top: 340px;\n        left: 20px;\n    }\n\n    .julius-button {\n        border-radius: 4px;\n        border: 1px solid #888;\n        color: #F6F5F5;\n        background-color: rgb(60, 59, 59);\n        padding: 10px;\n        cursor: pointer;\n        font-size: small;\n        width: 200px;\n        box-shadow: 0px 2px 3px #918F8F;\n        margin-bottom: 30px;\n        float: right;\n    }\n    .julius-input-hide {\n        position: absolute;\n        width: 200px;\n        height: 55px;\n        opacity: 0;\n        cursor: pointer;\n        top: -15px;\n        left: 362px;\n    }\n\n    .julius-container-input_file {\n        position: relative;\n        top: -30px;\n        left: 50px;\n    }\n\n    #julius-modal {\n        position: absolute;\n        width: 100%;\n        height: 100%;\n        display: block;\n        background-color: rgba(0, 0, 0, 0.66);\n        top: 1px;\n        z-index: 99999999999;\n    }\n\n    .julius-close--screen {\n        float: right;\n        font-size: 14px;\n        color: #000;\n        font-weight: bold;\n        height: 8px;\n        width: 8px;\n        display: block;\n        text-decoration: none !important;\n        font-family: Arial;\n        line-height: 8px;\n        padding: 10px;\n    }\n    .julius-close--screen:hover {\n        color: #fff;\n        border-radius: 20px;\n        background-color: #ccc;\n        height: 8px;\n        width: 8px;\n    }\n    .julius-last-images {\n        position: absolute;\n        top: 260px;\n        left: -7px;\n        width: 140px;\n        text-align: center;\n    }\n    \n    .julius-last-images > img {\n        border-radius: 3px;\n        border: solid 1px #8B8A8A;\n        box-shadow: 1px 3px 5px #888888;\n        cursor: pointer;\n        width: 140px;\n        height: 100px;\n\n    }\n    \n    .julius-last-images  > p {\n        line-height: 18px;\n        margin-top: 6px;\n        font-size: small;\n        color: #9E9E9E;\n        font-family: sans-serif;\n    }\n</style>\n<section id=\"julius-modal\">\n    <section class=\"julius-popup-container\">\n        <a class=\"julius-close--screen\" href=\"#\">x</a>\n       <form  class=\"julius-form\">\n            <input title=\"Open Image\"  class=\"julius-input-hide\" id=\"input-path\"  type=\"file\">\n            <button title=\"Open Image\" id=\"button-send\" class=\"julius-button\"> \n                    Open image\n            </button>\n        </form>\n    </section>\n</section>\n";
 	},"useData":true});
 
 /***/ },
@@ -9306,7 +9409,7 @@
 
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
-	var _handlebarsBase = __webpack_require__(6);
+	var _handlebarsBase = __webpack_require__(7);
 
 	// Each of these augment the Handlebars object. No need to setup here.
 	// (This is done to easily share code between commonjs and browse envs)
@@ -9321,7 +9424,7 @@
 
 	var _handlebarsException2 = _interopRequireDefault(_handlebarsException);
 
-	var _handlebarsUtils = __webpack_require__(7);
+	var _handlebarsUtils = __webpack_require__(6);
 
 	var Utils = _interopRequireWildcard(_handlebarsUtils);
 
@@ -9366,116 +9469,6 @@
 
 /***/ },
 /* 6 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	exports.__esModule = true;
-	exports.HandlebarsEnvironment = HandlebarsEnvironment;
-	// istanbul ignore next
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	var _utils = __webpack_require__(7);
-
-	var _exception = __webpack_require__(8);
-
-	var _exception2 = _interopRequireDefault(_exception);
-
-	var _helpers = __webpack_require__(9);
-
-	var _decorators = __webpack_require__(17);
-
-	var _logger = __webpack_require__(19);
-
-	var _logger2 = _interopRequireDefault(_logger);
-
-	var VERSION = '4.0.2';
-	exports.VERSION = VERSION;
-	var COMPILER_REVISION = 7;
-
-	exports.COMPILER_REVISION = COMPILER_REVISION;
-	var REVISION_CHANGES = {
-	  1: '<= 1.0.rc.2', // 1.0.rc.2 is actually rev2 but doesn't report it
-	  2: '== 1.0.0-rc.3',
-	  3: '== 1.0.0-rc.4',
-	  4: '== 1.x.x',
-	  5: '== 2.0.0-alpha.x',
-	  6: '>= 2.0.0-beta.1',
-	  7: '>= 4.0.0'
-	};
-
-	exports.REVISION_CHANGES = REVISION_CHANGES;
-	var objectType = '[object Object]';
-
-	function HandlebarsEnvironment(helpers, partials, decorators) {
-	  this.helpers = helpers || {};
-	  this.partials = partials || {};
-	  this.decorators = decorators || {};
-
-	  _helpers.registerDefaultHelpers(this);
-	  _decorators.registerDefaultDecorators(this);
-	}
-
-	HandlebarsEnvironment.prototype = {
-	  constructor: HandlebarsEnvironment,
-
-	  logger: _logger2['default'],
-	  log: _logger2['default'].log,
-
-	  registerHelper: function registerHelper(name, fn) {
-	    if (_utils.toString.call(name) === objectType) {
-	      if (fn) {
-	        throw new _exception2['default']('Arg not supported with multiple helpers');
-	      }
-	      _utils.extend(this.helpers, name);
-	    } else {
-	      this.helpers[name] = fn;
-	    }
-	  },
-	  unregisterHelper: function unregisterHelper(name) {
-	    delete this.helpers[name];
-	  },
-
-	  registerPartial: function registerPartial(name, partial) {
-	    if (_utils.toString.call(name) === objectType) {
-	      _utils.extend(this.partials, name);
-	    } else {
-	      if (typeof partial === 'undefined') {
-	        throw new _exception2['default']('Attempting to register a partial as undefined');
-	      }
-	      this.partials[name] = partial;
-	    }
-	  },
-	  unregisterPartial: function unregisterPartial(name) {
-	    delete this.partials[name];
-	  },
-
-	  registerDecorator: function registerDecorator(name, fn) {
-	    if (_utils.toString.call(name) === objectType) {
-	      if (fn) {
-	        throw new _exception2['default']('Arg not supported with multiple decorators');
-	      }
-	      _utils.extend(this.decorators, name);
-	    } else {
-	      this.decorators[name] = fn;
-	    }
-	  },
-	  unregisterDecorator: function unregisterDecorator(name) {
-	    delete this.decorators[name];
-	  }
-	};
-
-	var log = _logger2['default'].log;
-
-	exports.log = log;
-	exports.createFrame = _utils.createFrame;
-	exports.logger = _logger2['default'];
-	//# sourceMappingURL=data:application/json;base64,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SSxDQUFDLENBQUM7S0FDL0IsTUFBTTtBQUNMLFVBQUksQ0FBQyxVQUFVLENBQUMsSUFBSSxDQUFDLEdBQUcsRUFBRSxDQUFDO0tBQzVCO0dBQ0Y7QUFDRCxxQkFBbUIsRUFBRSw2QkFBUyxJQUFJLEVBQUU7QUFDbEMsV0FBTyxJQUFJLENBQUMsVUFBVSxDQUFDLElBQUksQ0FBQyxDQUFDO0dBQzlCO0NBQ0YsQ0FBQzs7QUFFSyxJQUFJLEdBQUcsR0FBRyxvQkFBTyxHQUFHLENBQUM7OztRQUVwQixXQUFXLFVBN0VYLFdBQVc7UUE2RUUsTUFBTSIsImZpbGUiOiJsaWIvaGFuZGxlYmFycy9iYXNlLmpzIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHtjcmVhdGVGcmFtZSwgZXh0ZW5kLCB0b1N0cmluZ30gZnJvbSAnLi91dGlscyc7XG5pbXBvcnQgRXhjZXB0aW9uIGZyb20gJy4vZXhjZXB0aW9uJztcbmltcG9ydCB7cmVnaXN0ZXJEZWZhdWx0SGVscGVyc30gZnJvbSAnLi9oZWxwZXJzJztcbmltcG9ydCB7cmVnaXN0ZXJEZWZhdWx0RGVjb3JhdG9yc30gZnJvbSAnLi9kZWNvcmF0b3JzJztcbmltcG9ydCBsb2dnZXIgZnJvbSAnLi9sb2dnZXInO1xuXG5leHBvcnQgY29uc3QgVkVSU0lPTiA9ICc0LjAuMic7XG5leHBvcnQgY29uc3QgQ09NUElMRVJfUkVWSVNJT04gPSA3O1xuXG5leHBvcnQgY29uc3QgUkVWSVNJT05fQ0hBTkdFUyA9IHtcbiAgMTogJzw9IDEuMC5yYy4yJywgLy8gMS4wLnJjLjIgaXMgYWN0dWFsbHkgcmV2MiBidXQgZG9lc24ndCByZXBvcnQgaXRcbiAgMjogJz09IDEuMC4wLXJjLjMnLFxuICAzOiAnPT0gMS4wLjAtcmMuNCcsXG4gIDQ6ICc9PSAxLngueCcsXG4gIDU6ICc9PSAyLjAuMC1hbHBoYS54JyxcbiAgNjogJz49IDIuMC4wLWJldGEuMScsXG4gIDc6ICc+PSA0LjAuMCdcbn07XG5cbmNvbnN0IG9iamVjdFR5cGUgPSAnW29iamVjdCBPYmplY3RdJztcblxuZXhwb3J0IGZ1bmN0aW9uIEhhbmRsZWJhcnNFbnZpcm9ubWVudChoZWxwZXJzLCBwYXJ0aWFscywgZGVjb3JhdG9ycykge1xuICB0aGlzLmhlbHBlcnMgPSBoZWxwZXJzIHx8IHt9O1xuICB0aGlzLnBhcnRpYWxzID0gcGFydGlhbHMgfHwge307XG4gIHRoaXMuZGVjb3JhdG9ycyA9IGRlY29yYXRvcnMgfHwge307XG5cbiAgcmVnaXN0ZXJEZWZhdWx0SGVscGVycyh0aGlzKTtcbiAgcmVnaXN0ZXJEZWZhdWx0RGVjb3JhdG9ycyh0aGlzKTtcbn1cblxuSGFuZGxlYmFyc0Vudmlyb25tZW50LnByb3RvdHlwZSA9IHtcbiAgY29uc3RydWN0b3I6IEhhbmRsZWJhcnNFbnZpcm9ubWVudCxcblxuICBsb2dnZXI6IGxvZ2dlcixcbiAgbG9nOiBsb2dnZXIubG9nLFxuXG4gIHJlZ2lzdGVySGVscGVyOiBmdW5jdGlvbihuYW1lLCBmbikge1xuICAgIGlmICh0b1N0cmluZy5jYWxsKG5hbWUpID09PSBvYmplY3RUeXBlKSB7XG4gICAgICBpZiAoZm4pIHsgdGhyb3cgbmV3IEV4Y2VwdGlvbignQXJnIG5vdCBzdXBwb3J0ZWQgd2l0aCBtdWx0aXBsZSBoZWxwZXJzJyk7IH1cbiAgICAgIGV4dGVuZCh0aGlzLmhlbHBlcnMsIG5hbWUpO1xuICAgIH0gZWxzZSB7XG4gICAgICB0aGlzLmhlbHBlcnNbbmFtZV0gPSBmbjtcbiAgICB9XG4gIH0sXG4gIHVucmVnaXN0ZXJIZWxwZXI6IGZ1bmN0aW9uKG5hbWUpIHtcbiAgICBkZWxldGUgdGhpcy5oZWxwZXJzW25hbWVdO1xuICB9LFxuXG4gIHJlZ2lzdGVyUGFydGlhbDogZnVuY3Rpb24obmFtZSwgcGFydGlhbCkge1xuICAgIGlmICh0b1N0cmluZy5jYWxsKG5hbWUpID09PSBvYmplY3RUeXBlKSB7XG4gICAgICBleHRlbmQodGhpcy5wYXJ0aWFscywgbmFtZSk7XG4gICAgfSBlbHNlIHtcbiAgICAgIGlmICh0eXBlb2YgcGFydGlhbCA9PT0gJ3VuZGVmaW5lZCcpIHtcbiAgICAgICAgdGhyb3cgbmV3IEV4Y2VwdGlvbignQXR0ZW1wdGluZyB0byByZWdpc3RlciBhIHBhcnRpYWwgYXMgdW5kZWZpbmVkJyk7XG4gICAgICB9XG4gICAgICB0aGlzLnBhcnRpYWxzW25hbWVdID0gcGFydGlhbDtcbiAgICB9XG4gIH0sXG4gIHVucmVnaXN0ZXJQYXJ0aWFsOiBmdW5jdGlvbihuYW1lKSB7XG4gICAgZGVsZXRlIHRoaXMucGFydGlhbHNbbmFtZV07XG4gIH0sXG5cbiAgcmVnaXN0ZXJEZWNvcmF0b3I6IGZ1bmN0aW9uKG5hbWUsIGZuKSB7XG4gICAgaWYgKHRvU3RyaW5nLmNhbGwobmFtZSkgPT09IG9iamVjdFR5cGUpIHtcbiAgICAgIGlmIChmbikgeyB0aHJvdyBuZXcgRXhjZXB0aW9uKCdBcmcgbm90IHN1cHBvcnRlZCB3aXRoIG11bHRpcGxlIGRlY29yYXRvcnMnKTsgfVxuICAgICAgZXh0ZW5kKHRoaXMuZGVjb3JhdG9ycywgbmFtZSk7XG4gICAgfSBlbHNlIHtcbiAgICAgIHRoaXMuZGVjb3JhdG9yc1tuYW1lXSA9IGZuO1xuICAgIH1cbiAgfSxcbiAgdW5yZWdpc3RlckRlY29yYXRvcjogZnVuY3Rpb24obmFtZSkge1xuICAgIGRlbGV0ZSB0aGlzLmRlY29yYXRvcnNbbmFtZV07XG4gIH1cbn07XG5cbmV4cG9ydCBsZXQgbG9nID0gbG9nZ2VyLmxvZztcblxuZXhwb3J0IHtjcmVhdGVGcmFtZSwgbG9nZ2VyfTtcbiJdfQ==
-
-
-/***/ },
-/* 7 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -9605,6 +9598,116 @@
 
 
 /***/ },
+/* 7 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	exports.__esModule = true;
+	exports.HandlebarsEnvironment = HandlebarsEnvironment;
+	// istanbul ignore next
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _utils = __webpack_require__(6);
+
+	var _exception = __webpack_require__(8);
+
+	var _exception2 = _interopRequireDefault(_exception);
+
+	var _helpers = __webpack_require__(9);
+
+	var _decorators = __webpack_require__(17);
+
+	var _logger = __webpack_require__(19);
+
+	var _logger2 = _interopRequireDefault(_logger);
+
+	var VERSION = '4.0.2';
+	exports.VERSION = VERSION;
+	var COMPILER_REVISION = 7;
+
+	exports.COMPILER_REVISION = COMPILER_REVISION;
+	var REVISION_CHANGES = {
+	  1: '<= 1.0.rc.2', // 1.0.rc.2 is actually rev2 but doesn't report it
+	  2: '== 1.0.0-rc.3',
+	  3: '== 1.0.0-rc.4',
+	  4: '== 1.x.x',
+	  5: '== 2.0.0-alpha.x',
+	  6: '>= 2.0.0-beta.1',
+	  7: '>= 4.0.0'
+	};
+
+	exports.REVISION_CHANGES = REVISION_CHANGES;
+	var objectType = '[object Object]';
+
+	function HandlebarsEnvironment(helpers, partials, decorators) {
+	  this.helpers = helpers || {};
+	  this.partials = partials || {};
+	  this.decorators = decorators || {};
+
+	  _helpers.registerDefaultHelpers(this);
+	  _decorators.registerDefaultDecorators(this);
+	}
+
+	HandlebarsEnvironment.prototype = {
+	  constructor: HandlebarsEnvironment,
+
+	  logger: _logger2['default'],
+	  log: _logger2['default'].log,
+
+	  registerHelper: function registerHelper(name, fn) {
+	    if (_utils.toString.call(name) === objectType) {
+	      if (fn) {
+	        throw new _exception2['default']('Arg not supported with multiple helpers');
+	      }
+	      _utils.extend(this.helpers, name);
+	    } else {
+	      this.helpers[name] = fn;
+	    }
+	  },
+	  unregisterHelper: function unregisterHelper(name) {
+	    delete this.helpers[name];
+	  },
+
+	  registerPartial: function registerPartial(name, partial) {
+	    if (_utils.toString.call(name) === objectType) {
+	      _utils.extend(this.partials, name);
+	    } else {
+	      if (typeof partial === 'undefined') {
+	        throw new _exception2['default']('Attempting to register a partial as undefined');
+	      }
+	      this.partials[name] = partial;
+	    }
+	  },
+	  unregisterPartial: function unregisterPartial(name) {
+	    delete this.partials[name];
+	  },
+
+	  registerDecorator: function registerDecorator(name, fn) {
+	    if (_utils.toString.call(name) === objectType) {
+	      if (fn) {
+	        throw new _exception2['default']('Arg not supported with multiple decorators');
+	      }
+	      _utils.extend(this.decorators, name);
+	    } else {
+	      this.decorators[name] = fn;
+	    }
+	  },
+	  unregisterDecorator: function unregisterDecorator(name) {
+	    delete this.decorators[name];
+	  }
+	};
+
+	var log = _logger2['default'].log;
+
+	exports.log = log;
+	exports.createFrame = _utils.createFrame;
+	exports.logger = _logger2['default'];
+	//# sourceMappingURL=data:application/json;base64,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SSxDQUFDLENBQUM7S0FDL0IsTUFBTTtBQUNMLFVBQUksQ0FBQyxVQUFVLENBQUMsSUFBSSxDQUFDLEdBQUcsRUFBRSxDQUFDO0tBQzVCO0dBQ0Y7QUFDRCxxQkFBbUIsRUFBRSw2QkFBUyxJQUFJLEVBQUU7QUFDbEMsV0FBTyxJQUFJLENBQUMsVUFBVSxDQUFDLElBQUksQ0FBQyxDQUFDO0dBQzlCO0NBQ0YsQ0FBQzs7QUFFSyxJQUFJLEdBQUcsR0FBRyxvQkFBTyxHQUFHLENBQUM7OztRQUVwQixXQUFXLFVBN0VYLFdBQVc7UUE2RUUsTUFBTSIsImZpbGUiOiJsaWIvaGFuZGxlYmFycy9iYXNlLmpzIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHtjcmVhdGVGcmFtZSwgZXh0ZW5kLCB0b1N0cmluZ30gZnJvbSAnLi91dGlscyc7XG5pbXBvcnQgRXhjZXB0aW9uIGZyb20gJy4vZXhjZXB0aW9uJztcbmltcG9ydCB7cmVnaXN0ZXJEZWZhdWx0SGVscGVyc30gZnJvbSAnLi9oZWxwZXJzJztcbmltcG9ydCB7cmVnaXN0ZXJEZWZhdWx0RGVjb3JhdG9yc30gZnJvbSAnLi9kZWNvcmF0b3JzJztcbmltcG9ydCBsb2dnZXIgZnJvbSAnLi9sb2dnZXInO1xuXG5leHBvcnQgY29uc3QgVkVSU0lPTiA9ICc0LjAuMic7XG5leHBvcnQgY29uc3QgQ09NUElMRVJfUkVWSVNJT04gPSA3O1xuXG5leHBvcnQgY29uc3QgUkVWSVNJT05fQ0hBTkdFUyA9IHtcbiAgMTogJzw9IDEuMC5yYy4yJywgLy8gMS4wLnJjLjIgaXMgYWN0dWFsbHkgcmV2MiBidXQgZG9lc24ndCByZXBvcnQgaXRcbiAgMjogJz09IDEuMC4wLXJjLjMnLFxuICAzOiAnPT0gMS4wLjAtcmMuNCcsXG4gIDQ6ICc9PSAxLngueCcsXG4gIDU6ICc9PSAyLjAuMC1hbHBoYS54JyxcbiAgNjogJz49IDIuMC4wLWJldGEuMScsXG4gIDc6ICc+PSA0LjAuMCdcbn07XG5cbmNvbnN0IG9iamVjdFR5cGUgPSAnW29iamVjdCBPYmplY3RdJztcblxuZXhwb3J0IGZ1bmN0aW9uIEhhbmRsZWJhcnNFbnZpcm9ubWVudChoZWxwZXJzLCBwYXJ0aWFscywgZGVjb3JhdG9ycykge1xuICB0aGlzLmhlbHBlcnMgPSBoZWxwZXJzIHx8IHt9O1xuICB0aGlzLnBhcnRpYWxzID0gcGFydGlhbHMgfHwge307XG4gIHRoaXMuZGVjb3JhdG9ycyA9IGRlY29yYXRvcnMgfHwge307XG5cbiAgcmVnaXN0ZXJEZWZhdWx0SGVscGVycyh0aGlzKTtcbiAgcmVnaXN0ZXJEZWZhdWx0RGVjb3JhdG9ycyh0aGlzKTtcbn1cblxuSGFuZGxlYmFyc0Vudmlyb25tZW50LnByb3RvdHlwZSA9IHtcbiAgY29uc3RydWN0b3I6IEhhbmRsZWJhcnNFbnZpcm9ubWVudCxcblxuICBsb2dnZXI6IGxvZ2dlcixcbiAgbG9nOiBsb2dnZXIubG9nLFxuXG4gIHJlZ2lzdGVySGVscGVyOiBmdW5jdGlvbihuYW1lLCBmbikge1xuICAgIGlmICh0b1N0cmluZy5jYWxsKG5hbWUpID09PSBvYmplY3RUeXBlKSB7XG4gICAgICBpZiAoZm4pIHsgdGhyb3cgbmV3IEV4Y2VwdGlvbignQXJnIG5vdCBzdXBwb3J0ZWQgd2l0aCBtdWx0aXBsZSBoZWxwZXJzJyk7IH1cbiAgICAgIGV4dGVuZCh0aGlzLmhlbHBlcnMsIG5hbWUpO1xuICAgIH0gZWxzZSB7XG4gICAgICB0aGlzLmhlbHBlcnNbbmFtZV0gPSBmbjtcbiAgICB9XG4gIH0sXG4gIHVucmVnaXN0ZXJIZWxwZXI6IGZ1bmN0aW9uKG5hbWUpIHtcbiAgICBkZWxldGUgdGhpcy5oZWxwZXJzW25hbWVdO1xuICB9LFxuXG4gIHJlZ2lzdGVyUGFydGlhbDogZnVuY3Rpb24obmFtZSwgcGFydGlhbCkge1xuICAgIGlmICh0b1N0cmluZy5jYWxsKG5hbWUpID09PSBvYmplY3RUeXBlKSB7XG4gICAgICBleHRlbmQodGhpcy5wYXJ0aWFscywgbmFtZSk7XG4gICAgfSBlbHNlIHtcbiAgICAgIGlmICh0eXBlb2YgcGFydGlhbCA9PT0gJ3VuZGVmaW5lZCcpIHtcbiAgICAgICAgdGhyb3cgbmV3IEV4Y2VwdGlvbignQXR0ZW1wdGluZyB0byByZWdpc3RlciBhIHBhcnRpYWwgYXMgdW5kZWZpbmVkJyk7XG4gICAgICB9XG4gICAgICB0aGlzLnBhcnRpYWxzW25hbWVdID0gcGFydGlhbDtcbiAgICB9XG4gIH0sXG4gIHVucmVnaXN0ZXJQYXJ0aWFsOiBmdW5jdGlvbihuYW1lKSB7XG4gICAgZGVsZXRlIHRoaXMucGFydGlhbHNbbmFtZV07XG4gIH0sXG5cbiAgcmVnaXN0ZXJEZWNvcmF0b3I6IGZ1bmN0aW9uKG5hbWUsIGZuKSB7XG4gICAgaWYgKHRvU3RyaW5nLmNhbGwobmFtZSkgPT09IG9iamVjdFR5cGUpIHtcbiAgICAgIGlmIChmbikgeyB0aHJvdyBuZXcgRXhjZXB0aW9uKCdBcmcgbm90IHN1cHBvcnRlZCB3aXRoIG11bHRpcGxlIGRlY29yYXRvcnMnKTsgfVxuICAgICAgZXh0ZW5kKHRoaXMuZGVjb3JhdG9ycywgbmFtZSk7XG4gICAgfSBlbHNlIHtcbiAgICAgIHRoaXMuZGVjb3JhdG9yc1tuYW1lXSA9IGZuO1xuICAgIH1cbiAgfSxcbiAgdW5yZWdpc3RlckRlY29yYXRvcjogZnVuY3Rpb24obmFtZSkge1xuICAgIGRlbGV0ZSB0aGlzLmRlY29yYXRvcnNbbmFtZV07XG4gIH1cbn07XG5cbmV4cG9ydCBsZXQgbG9nID0gbG9nZ2VyLmxvZztcblxuZXhwb3J0IHtjcmVhdGVGcmFtZSwgbG9nZ2VyfTtcbiJdfQ==
+
+
+/***/ },
 /* 8 */
 /***/ function(module, exports) {
 
@@ -9710,7 +9813,7 @@
 
 	exports.__esModule = true;
 
-	var _utils = __webpack_require__(7);
+	var _utils = __webpack_require__(6);
 
 	exports['default'] = function (instance) {
 	  instance.registerHelper('blockHelperMissing', function (context, options) {
@@ -9758,7 +9861,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var _utils = __webpack_require__(7);
+	var _utils = __webpack_require__(6);
 
 	var _exception = __webpack_require__(8);
 
@@ -9890,7 +9993,7 @@
 
 	exports.__esModule = true;
 
-	var _utils = __webpack_require__(7);
+	var _utils = __webpack_require__(6);
 
 	exports['default'] = function (instance) {
 	  instance.registerHelper('if', function (conditional, options) {
@@ -9975,7 +10078,7 @@
 
 	exports.__esModule = true;
 
-	var _utils = __webpack_require__(7);
+	var _utils = __webpack_require__(6);
 
 	exports['default'] = function (instance) {
 	  instance.registerHelper('with', function (context, options) {
@@ -10036,7 +10139,7 @@
 
 	exports.__esModule = true;
 
-	var _utils = __webpack_require__(7);
+	var _utils = __webpack_require__(6);
 
 	exports['default'] = function (instance) {
 	  instance.registerDecorator('inline', function (fn, props, container, options) {
@@ -10155,7 +10258,7 @@
 
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
-	var _utils = __webpack_require__(7);
+	var _utils = __webpack_require__(6);
 
 	var Utils = _interopRequireWildcard(_utils);
 
@@ -10163,7 +10266,7 @@
 
 	var _exception2 = _interopRequireDefault(_exception);
 
-	var _base = __webpack_require__(6);
+	var _base = __webpack_require__(7);
 
 	function checkRevision(compilerInfo) {
 	  var compilerRevision = compilerInfo && compilerInfo[0] || 1,
@@ -10475,40 +10578,21 @@
 	    };
 
 	    return {
-	        layer : function () {
-	            $(target.layer).css({
-	                'position' : 'fixed',
-	                'display': 'block',
-	                'top':  Storage.read().top,
-	                'left': Storage.read().left,
-	                'right': 0,
-	                'margin': 'auto',
-	                'opacity': Storage.read().opacity,
-	                'z-index': 9999999999
-	            });
-	        },
 
-	        render : function () {
-	            $(target.body).append(LayerContainer());
-	        },
+	        render : function (data) {
+	            $(target.body).html(LayerContainer(data));
+	            var width = $(target.layer + ' ' +  'img').width();
+	            $(target.layer).css({'width': width});
+	            Draggable.init();
 
-	        insertImage : function () {
-	            $(target.layer).html($('<img>',{
-	                src: Storage.read().path
-	            }));
-	            var width =  $(target.layer + ' img').width();
-	            $(target.layer).css({'width': width})
 	        },
 
 	        init : function (object) {
 	            if (!Storage.read() || object.path !== Storage.read().path ) {
 	                Storage.create(object);
 	            }
-	            
-	            this.render();
-	            this.layer();
-	            this.insertImage();
-	            Draggable.init();
+
+	            this.render(Storage.read());
 	        }
 	    };
 	};
@@ -12658,7 +12742,17 @@
 
 	var Handlebars = __webpack_require__(4);
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-	    return "<style type=\"text/css\">\n    .ui-draggable-dragging{\n        box-shadow: rgba(22, 47, 172, 0.89) -4px -4px 29px;\n        opacity: 0.5 !important;\n        cursor: move;\n    }\n\n</style>\n<section id=\"julius-layer-container\">\n</section>\n";
+	    var helper, alias1=helpers.helperMissing, alias2="function", alias3=container.escapeExpression;
+
+	  return "<style type=\"text/css\">\n    #julius-layer-container {\n        position: fixed;\n        display: block;\n        right: 0;\n        margin: auto;\n        z-index: 9999999999;\n        top: "
+	    + alias3(((helper = (helper = helpers.top || (depth0 != null ? depth0.top : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"top","hash":{},"data":data}) : helper)))
+	    + "px;\n        left: "
+	    + alias3(((helper = (helper = helpers.left || (depth0 != null ? depth0.left : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"left","hash":{},"data":data}) : helper)))
+	    + "px;\n        opacity: "
+	    + alias3(((helper = (helper = helpers.opacity || (depth0 != null ? depth0.opacity : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"opacity","hash":{},"data":data}) : helper)))
+	    + ";\n    }\n\n    .ui-draggable-dragging{\n        box-shadow: rgba(22, 47, 172, 0.89) -4px -4px 29px;\n        opacity: 0.5 !important;\n        cursor: move;\n    }\n</style>\n<section id=\"julius-layer-container\">\n    <img src=\""
+	    + alias3(((helper = (helper = helpers.path || (depth0 != null ? depth0.path : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"path","hash":{},"data":data}) : helper)))
+	    + "\">\n</section>\n";
 	},"useData":true});
 
 /***/ },
@@ -13008,92 +13102,14 @@
 /* 35 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
-	var templateStart = __webpack_require__(3);
-	var View    = __webpack_require__(23);
-	var Storage = __webpack_require__(24);
+	var Handlebars = __webpack_require__(4);
+	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+	    var helper;
 
-	module.exports = new function () {
-	    var target = {
-	        modal       : '#julius-modal',
-	        buttonClose : '.julius-close--screen',
-	        input       : '#input-path',
-	        inputFake   : '#input-fake'
-	    };
-	    var objLayer = {
-	        "top":0,
-	        "left":0,
-	        "path":"",
-	        "opacity": 1,
-	        "fileName": ''
-	    }, self;
-
-	    return {
-	        init : function () {
-	            self = this;
-	            this.render();
-	            this.closeScreen();
-	            this.getImage();
-	        },
-
-	        render : function () {
-	            var $body = $('body');
-	            if($(target.modal).length > 0) {
-	                return;
-	            }
-
-	            $body.scrollTop();
-	            $body.append(templateStart());
-	            $(target.modal).css({
-	                width   : window.screen.width,
-	                height  : window.screen.height
-	            });
-	        },
-
-	        removeScreen : function () {
-	            $(target.modal).remove();
-	        },
-
-	        closeScreen : function () {
-	            $(target.buttonClose).on('click', function (e) {
-	                e.preventDefault();
-	                self.removeScreen();
-	            });
-	        },
-	        getImage: function () {
-	            var $input = $(target.input);
-	            $input.change(function () {
-	                var files = !!this.files ? this.files : [];
-	                // no file selected, or no FileReader support
-	                if (!files.length || !window.FileReader)  {
-	                    return;
-	                }
-	                if (/^image/.test( files[0].type)){        // only image file
-	                    var reader = new FileReader();       // instance of the FileReader
-	                    reader.readAsDataURL(files[0]);      // read the local file
-	                    reader.onloadend = function () { 
-	                        objLayer.fileName = files[0].name;
-	                        self.setImage(this.result);
-	                    };
-	                }
-
-	            });
-	        },
-	        setImage : function (image) {
-	            objLayer.path = image;
-	            View.init(objLayer);
-	            this.removeScreen();
-	        },
-	        lastImage : function () {
-	            if (!Storage.read()) {
-	                return;
-	            } 
-	            
-	        }
-	    };
-	};
-
-
+	  return "<figure class=\"julius-last-images\">\n    <img src=\""
+	    + container.escapeExpression(((helper = (helper = helpers.path || (depth0 != null ? depth0.path : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0,{"name":"path","hash":{},"data":data}) : helper)))
+	    + "\">\n    <p> \n        Latest images used\n    </p>\n</figure>\n\n";
+	},"useData":true});
 
 /***/ }
 /******/ ]);

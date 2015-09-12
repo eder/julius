@@ -12,40 +12,21 @@ var Storage              = require('js/storage'),
     };
 
     return {
-        layer : function () {
-            $(target.layer).css({
-                'position' : 'fixed',
-                'display': 'block',
-                'top':  Storage.read().top,
-                'left': Storage.read().left,
-                'right': 0,
-                'margin': 'auto',
-                'opacity': Storage.read().opacity,
-                'z-index': 9999999999
-            });
-        },
 
-        render : function () {
-            $(target.body).append(LayerContainer());
-        },
+        render : function (data) {
+            $(target.body).html(LayerContainer(data));
+            var width = $(target.layer + ' ' +  'img').width();
+            $(target.layer).css({'width': width});
+            Draggable.init();
 
-        insertImage : function () {
-            $(target.layer).html($('<img>',{
-                src: Storage.read().path
-            }));
-            var width =  $(target.layer + ' img').width();
-            $(target.layer).css({'width': width})
         },
 
         init : function (object) {
             if (!Storage.read() || object.path !== Storage.read().path ) {
                 Storage.create(object);
             }
-            
-            this.render();
-            this.layer();
-            this.insertImage();
-            Draggable.init();
+
+            this.render(Storage.read());
         }
     };
 };

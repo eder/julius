@@ -1,5 +1,6 @@
 'use strict';
-var templateStart = require('js/templates/_start_screen.html');
+var templateStart       = require('js/templates/_start_screen.html');
+var templateLatestImage = require('js/templates/_latest_image.html');
 var View    = require('js/view');
 var Storage = require('js/storage');
 
@@ -7,6 +8,8 @@ module.exports = new function () {
     var target = {
         modal       : '#julius-modal',
         buttonClose : '.julius-close--screen',
+        lastImage   : '.julius-last-images',
+        popup : '.julius-popup-container',
         input       : '#input-path',
         inputFake   : '#input-fake'
     };
@@ -19,12 +22,6 @@ module.exports = new function () {
     }, self;
 
     return {
-        init : function () {
-            self = this;
-            this.render();
-            this.closeScreen();
-            this.getImage();
-        },
 
         render : function () {
             var $body = $('body');
@@ -50,6 +47,7 @@ module.exports = new function () {
                 self.removeScreen();
             });
         },
+
         getImage: function () {
             var $input = $(target.input);
             $input.change(function () {
@@ -66,20 +64,35 @@ module.exports = new function () {
                         self.setImage(this.result);
                     };
                 }
-
             });
         },
+
         setImage : function (image) {
             objLayer.path = image;
             View.init(objLayer);
             this.removeScreen();
         },
+
         lastImage : function () {
             if (!Storage.read()) {
                 return;
-            } 
-            
-        }
+            }
+            $(target.popup).append(templateLatestImage(Storage.read()));
+
+            $(target.lastImage).on('click', function (e) {
+                e.preventDefault();
+                View.render(Storage.read());
+                self.removeScreen();
+            });
+        },
+
+        init : function () {
+            self = this;
+            this.render();
+            this.closeScreen();
+            this.getImage();
+            this.lastImage();
+        },
     };
 };
 

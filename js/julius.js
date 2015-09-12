@@ -48,8 +48,8 @@
 	window.jQuery = window.$ =  __webpack_require__(1);
 
 	var Screen   = __webpack_require__(2),
-	    Move    = __webpack_require__(32),
-	    Opacity = __webpack_require__(34);
+	    Move    = __webpack_require__(33),
+	    Opacity = __webpack_require__(35);
 
 	Screen.init();
 	Move.init();
@@ -9278,9 +9278,9 @@
 
 	'use strict';
 	var templateStart       = __webpack_require__(3);
-	var templateLatestImage = __webpack_require__(35);
-	var View    = __webpack_require__(23);
-	var Storage = __webpack_require__(24);
+	var templateLatestImage = __webpack_require__(23);
+	var View    = __webpack_require__(24);
+	var Storage = __webpack_require__(25);
 
 	module.exports = new function () {
 	    var target = {
@@ -10564,12 +10564,25 @@
 /* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
+	var Handlebars = __webpack_require__(4);
+	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+	    var helper;
+
+	  return "<figure class=\"julius-last-images\">\n    <img src=\""
+	    + container.escapeExpression(((helper = (helper = helpers.path || (depth0 != null ? depth0.path : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0,{"name":"path","hash":{},"data":data}) : helper)))
+	    + "\">\n    <p> \n        Latest images used\n    </p>\n</figure>\n\n";
+	},"useData":true});
+
+/***/ },
+/* 24 */
+/***/ function(module, exports, __webpack_require__) {
+
 	'use strict';
 	window.jQuery = window.$ =  __webpack_require__(1);
 
-	var Storage              = __webpack_require__(24),
-	    Draggable            = __webpack_require__(26),
-	    LayerContainer       = __webpack_require__(31);
+	var Storage              = __webpack_require__(25),
+	    Draggable            = __webpack_require__(27),
+	    LayerContainer       = __webpack_require__(32);
 
 	 module.exports = new function() {
 	    var target = {
@@ -10580,7 +10593,9 @@
 	    return {
 
 	        render : function (data) {
-	            $(target.body).html(LayerContainer(data));
+	            if ($(target.layer).length > 0) return;
+
+	            $(target.body).append(LayerContainer(data));
 	            var width = $(target.layer + ' ' +  'img').width();
 	            $(target.layer).css({'width': width});
 	            Draggable.init();
@@ -10599,11 +10614,11 @@
 
 
 /***/ },
-/* 24 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var localStorage = __webpack_require__(25);
+	var localStorage = __webpack_require__(26);
 
 	module.exports = new function () {
 	    var storage_name = 'juliusLayer', index;
@@ -10639,7 +10654,7 @@
 
 
 /***/ },
-/* 25 */
+/* 26 */
 /***/ function(module, exports) {
 
 	/*! Html5 Storage jQuery Plugin - v1.0 - 2013-01-19
@@ -10696,12 +10711,12 @@
 
 
 /***/ },
-/* 26 */
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	__webpack_require__(27);
-	var Storage = __webpack_require__(24);
+	__webpack_require__(28);
+	var Storage = __webpack_require__(25);
 	var target = {
 	    layer : '#julius-layer-container',
 	};
@@ -10733,13 +10748,13 @@
 
 
 /***/ },
-/* 27 */
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var jQuery = __webpack_require__(1);
-	__webpack_require__(28);
 	__webpack_require__(29);
 	__webpack_require__(30);
+	__webpack_require__(31);
 
 	/*!
 	 * jQuery UI Draggable 1.10.4
@@ -11702,7 +11717,7 @@
 
 
 /***/ },
-/* 28 */
+/* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var jQuery = __webpack_require__(1);
@@ -12030,11 +12045,11 @@
 
 
 /***/ },
-/* 29 */
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var jQuery = __webpack_require__(1);
-	__webpack_require__(30);
+	__webpack_require__(31);
 
 	/*!
 	 * jQuery UI Mouse 1.10.4
@@ -12208,7 +12223,7 @@
 
 
 /***/ },
-/* 30 */
+/* 31 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var jQuery = __webpack_require__(1);
@@ -12737,7 +12752,7 @@
 
 
 /***/ },
-/* 31 */
+/* 32 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Handlebars = __webpack_require__(4);
@@ -12756,12 +12771,12 @@
 	},"useData":true});
 
 /***/ },
-/* 32 */
+/* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	__webpack_require__(33);
-	var Storage = __webpack_require__(24);
+	__webpack_require__(34);
+	var Storage = __webpack_require__(25);
 
 	module.exports = new function () {
 	    var objLayer, container = function () {
@@ -12807,12 +12822,19 @@
 	                container().css({'display' : 'none'});
 	            });
 	        },
+
 	        show : function () {
 	            $(document).bind('keydown', 'Shift+J', function () {
 	                container().css({'display' : 'block'});
 	            });
 	        },
-	        
+
+	        clear : function () {
+	            $(document).bind('keydown', 'Shift+C', function () {
+	                Storage.remove();
+	            });
+	        },
+
 	        init : function () {
 	            this.up();
 	            this.right();
@@ -12820,13 +12842,14 @@
 	            this.left();
 	            this.hide();
 	            this.show();
+	            this.clear();
 	        }
 	    };
 	};
 
 
 /***/ },
-/* 33 */
+/* 34 */
 /***/ function(module, exports) {
 
 	/*jslint browser: true*/
@@ -13037,13 +13060,13 @@
 
 
 /***/ },
-/* 34 */
+/* 35 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	__webpack_require__(33);
-	var Storage = __webpack_require__(24);
+	__webpack_require__(34);
+	var Storage = __webpack_require__(25);
 
 	module.exports = new function () {
 	    var  self, objLayer, container = function () {
@@ -13097,19 +13120,6 @@
 
 	};
 
-
-/***/ },
-/* 35 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var Handlebars = __webpack_require__(4);
-	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-	    var helper;
-
-	  return "<figure class=\"julius-last-images\">\n    <img src=\""
-	    + container.escapeExpression(((helper = (helper = helpers.path || (depth0 != null ? depth0.path : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0,{"name":"path","hash":{},"data":data}) : helper)))
-	    + "\">\n    <p> \n        Latest images used\n    </p>\n</figure>\n\n";
-	},"useData":true});
 
 /***/ }
 /******/ ]);

@@ -14,7 +14,9 @@ var Storage              = require('js/storage'),
     return {
 
         render : function (data) {
-            $(target.body).html(LayerContainer(data));
+            if ($(target.layer).length > 0) return;
+
+            $(target.body).append(LayerContainer(data));
             var width = $(target.layer + ' ' +  'img').width();
             $(target.layer).css({'width': width});
             Draggable.init();

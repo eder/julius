@@ -46,12 +46,19 @@ module.exports = new function () {
                 container().css({'display' : 'none'});
             });
         },
+
         show : function () {
             $(document).bind('keydown', 'Shift+J', function () {
                 container().css({'display' : 'block'});
             });
         },
-        
+
+        clear : function () {
+            $(document).bind('keydown', 'Shift+C', function () {
+                Storage.remove();
+            });
+        },
+
         init : function () {
             this.up();
             this.right();
@@ -59,6 +66,7 @@ module.exports = new function () {
             this.left();
             this.hide();
             this.show();
+            this.clear();
         }
     };
 };

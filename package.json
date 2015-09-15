@@ -20,6 +20,9 @@
   },
   "homepage": "https://github.com/eder/julius",
   "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-jszip": "^0.1.2",
+    "gulp-watch": "^4.3.5",
     "jquery": "^2.1.4",
     "jquery-ui": "^1.10.5",
     "karma": "^0.13.9",
@@ -27,10 +30,10 @@
     "karma-jasmine-jquery": "^0.1.1",
     "karma-phantomjs-launcher": "^0.2.1",
     "karma-webpack": "^1.7.0",
-    "phantomjs": "^1.9.18"
+    "phantomjs": "^1.9.18",
+    "webpack-stream": "^2.1.0"
   },
   "scripts": {
     "test": "./node_modules/.bin/karma start --single-run --browsers PhantomJS"
-   }
-
+  }
 }

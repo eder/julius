@@ -49,7 +49,7 @@
 
 	var Screen   = __webpack_require__(2),
 	    Move    = __webpack_require__(33),
-	    Opacity = __webpack_require__(35);
+	    Opacity = __webpack_require__(34);
 
 	Screen.init();
 	Move.init();
@@ -12765,7 +12765,7 @@
 	    + alias3(((helper = (helper = helpers.left || (depth0 != null ? depth0.left : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"left","hash":{},"data":data}) : helper)))
 	    + "px;\n        opacity: "
 	    + alias3(((helper = (helper = helpers.opacity || (depth0 != null ? depth0.opacity : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"opacity","hash":{},"data":data}) : helper)))
-	    + ";\n    }\n\n    .ui-draggable-dragging{\n        box-shadow: rgba(22, 47, 172, 0.89) -4px -4px 29px;\n        opacity: 0.5 !important;\n        cursor: move;\n    }\n</style>\n<section id=\"julius-layer-container\">\n    <img src=\""
+	    + ";\n        cursor: move;\n    }\n\n    .ui-draggable-dragging{\n        box-shadow: rgba(22, 47, 172, 0.89) -4px -4px 29px;\n        opacity: 0.5 !important;\n    }\n</style>\n<section id=\"julius-layer-container\">\n    <img src=\""
 	    + alias3(((helper = (helper = helpers.path || (depth0 != null ? depth0.path : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"path","hash":{},"data":data}) : helper)))
 	    + "\">\n</section>\n";
 	},"useData":true});
@@ -12775,7 +12775,8 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	__webpack_require__(34);
+	var locked;
+	__webpack_require__(35);
 	var Storage = __webpack_require__(25);
 
 	module.exports = new function () {
@@ -12835,6 +12836,21 @@
 	            });
 	        },
 
+	        lock : function () {
+	            $(document).bind('keydown', 'Shift+L', function () {
+	                objLayer = Storage.read();
+	                if(objLayer.PointerEvents === 'none') {
+	                    objLayer.PointerEvents = 'auto';
+	                } else {
+	                    objLayer.PointerEvents = 'none';
+	                    locked = true;
+	                    Storage.create(objLayer);
+	                }
+	                Storage.create(objLayer);
+	                container().css({'pointer-events': Storage.read().PointerEvents});
+	            });
+	        },
+
 	        init : function () {
 	            this.up();
 	            this.right();
@@ -12843,6 +12859,7 @@
 	            this.hide();
 	            this.show();
 	            this.clear();
+	            this.lock();
 	        }
 	    };
 	};
@@ -12850,6 +12867,68 @@
 
 /***/ },
 /* 34 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	__webpack_require__(35);
+	var Storage = __webpack_require__(25);
+
+	module.exports = new function () {
+	    var  self, objLayer, container = function () {
+	            return $('#julius-layer-container');
+	    };
+
+	    return {
+	        up: function () {
+	             
+	            $(document).bind('keydown', 'Alt+up', function () {
+	                objLayer = Storage.read();
+	                if (objLayer.opacity >= 1) {
+	                    return
+	                }
+	                objLayer.opacity += 0.1
+	                Storage.create(objLayer);
+	                container().css({'opacity': objLayer.opacity});
+	            });
+	        },
+	        down : function () {
+	            $(document).bind('keydown', 'Alt+down', function () {
+	                objLayer = Storage.read();
+	                if (objLayer.opacity == 0 ) {
+	                    return
+	                }
+	                objLayer.opacity = objLayer.opacity.toFixed(1);
+	                objLayer.opacity -= 0.1;
+	                Storage.create(objLayer);
+	                container().css({'opacity': objLayer.opacity});
+	            });
+	        },
+	        
+	        lockKeyPress : function () {
+	            var ar=new Array(33,34,35,36,37,38,39,40);
+	            $(document).keydown(function(e) {
+	                var key = e.which;
+	                if($.inArray(key,ar) > -1) {
+	                    e.preventDefault();
+	                    return false;
+	                }
+	                return true;
+	            });
+	        },
+	        
+	        init: function () {
+	            this.lockKeyPress();
+	            this.up();
+	            this.down();
+	        }
+	    }
+
+	};
+
+
+/***/ },
+/* 35 */
 /***/ function(module, exports) {
 
 	/*jslint browser: true*/
@@ -13057,68 +13136,6 @@
 
 	})(jQuery || this.jQuery || window.jQuery);
 
-
-
-/***/ },
-/* 35 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	__webpack_require__(34);
-	var Storage = __webpack_require__(25);
-
-	module.exports = new function () {
-	    var  self, objLayer, container = function () {
-	            return $('#julius-layer-container');
-	    };
-
-	    return {
-	        up: function () {
-	             
-	            $(document).bind('keydown', 'Alt+up', function () {
-	                objLayer = Storage.read();
-	                if (objLayer.opacity >= 1) {
-	                    return
-	                }
-	                objLayer.opacity += 0.1
-	                Storage.create(objLayer);
-	                container().css({'opacity': objLayer.opacity});
-	            });
-	        },
-	        down : function () {
-	            $(document).bind('keydown', 'Alt+down', function () {
-	                objLayer = Storage.read();
-	                if (objLayer.opacity == 0 ) {
-	                    return
-	                }
-	                objLayer.opacity = objLayer.opacity.toFixed(1);
-	                objLayer.opacity -= 0.1;
-	                Storage.create(objLayer);
-	                container().css({'opacity': objLayer.opacity});
-	            });
-	        },
-	        
-	        lockKeyPress : function () {
-	            var ar=new Array(33,34,35,36,37,38,39,40);
-	            $(document).keydown(function(e) {
-	                var key = e.which;
-	                if($.inArray(key,ar) > -1) {
-	                    e.preventDefault();
-	                    return false;
-	                }
-	                return true;
-	            });
-	        },
-	        
-	        init: function () {
-	            this.lockKeyPress();
-	            this.up();
-	            this.down();
-	        }
-	    }
-
-	};
 
 
 /***/ }

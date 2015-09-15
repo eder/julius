@@ -1,4 +1,5 @@
 'use strict';
+var locked;
 require('js/vendors/jquery.hotkey');
 var Storage = require('js/storage');
 
@@ -59,6 +60,21 @@ module.exports = new function () {
             });
         },
 
+        lock : function () {
+            $(document).bind('keydown', 'Shift+L', function () {
+                objLayer = Storage.read();
+                if(objLayer.PointerEvents === 'none') {
+                    objLayer.PointerEvents = 'auto';
+                } else {
+                    objLayer.PointerEvents = 'none';
+                    locked = true;
+                    Storage.create(objLayer);
+                }
+                Storage.create(objLayer);
+                container().css({'pointer-events': Storage.read().PointerEvents});
+            });
+        },
+
         init : function () {
             this.up();
             this.right();
@@ -67,6 +83,7 @@ module.exports = new function () {
             this.hide();
             this.show();
             this.clear();
+            this.lock();
         }
     };
 };

@@ -1,4 +1,6 @@
 'use strict';
+window.jQuery = window.$ =  require('jquery/dist/jquery');
+
 var localStorage = require('js/vendors/htmlstorage');
 
 module.exports = new function () {

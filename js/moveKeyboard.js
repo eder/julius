@@ -17,6 +17,7 @@ module.exports = new function () {
                 container().css({'top' : objLayer.top });
             });
         },
+
         right : function (){
             $(document).bind('keydown', 'Shift+right', function () {
                 objLayer = Storage.read();
@@ -25,6 +26,7 @@ module.exports = new function () {
                 container().css({'left': objLayer.left});
             });
         },
+
         down : function () {
             $(document).bind('keydown', 'Shift+down', function () {
                 objLayer = Storage.read();
@@ -33,6 +35,7 @@ module.exports = new function () {
                 container().css({'top': objLayer.top});
             });
         },
+
         left : function () {
             $(document).bind('keydown', 'Shift+left', function () {
                 objLayer = Storage.read();
@@ -70,6 +73,7 @@ module.exports = new function () {
                     locked = true;
                     Storage.create(objLayer);
                 }
+
                 Storage.create(objLayer);
                 container().css({'pointer-events': Storage.read().PointerEvents});
             });

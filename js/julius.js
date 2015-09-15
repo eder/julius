@@ -10618,6 +10618,8 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
+	window.jQuery = window.$ =  __webpack_require__(1);
+
 	var localStorage = __webpack_require__(26);
 
 	module.exports = new function () {
@@ -12793,6 +12795,7 @@
 	                container().css({'top' : objLayer.top });
 	            });
 	        },
+
 	        right : function (){
 	            $(document).bind('keydown', 'Shift+right', function () {
 	                objLayer = Storage.read();
@@ -12801,6 +12804,7 @@
 	                container().css({'left': objLayer.left});
 	            });
 	        },
+
 	        down : function () {
 	            $(document).bind('keydown', 'Shift+down', function () {
 	                objLayer = Storage.read();
@@ -12809,6 +12813,7 @@
 	                container().css({'top': objLayer.top});
 	            });
 	        },
+
 	        left : function () {
 	            $(document).bind('keydown', 'Shift+left', function () {
 	                objLayer = Storage.read();
@@ -12846,6 +12851,7 @@
 	                    locked = true;
 	                    Storage.create(objLayer);
 	                }
+
 	                Storage.create(objLayer);
 	                container().css({'pointer-events': Storage.read().PointerEvents});
 	            });

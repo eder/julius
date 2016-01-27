@@ -49,7 +49,7 @@
 
 	var Screen   = __webpack_require__(2),
 	    Move    = __webpack_require__(33),
-	    Opacity = __webpack_require__(34);
+	    Opacity = __webpack_require__(35);
 
 	Screen.init();
 	Move.init();
@@ -9309,6 +9309,8 @@
 
 	            $body.scrollTop();
 	            $body.append(templateStart());
+	            var imageUrl = chrome.extension.getURL('/images/bg-popup.png');
+	            $(target.pop).css('background-image', 'url(' + imageUrl + ')');
 	            $(target.modal).css({
 	                width   : window.screen.width,
 	                height  : window.screen.height
@@ -12789,7 +12791,7 @@
 
 	'use strict';
 	var locked;
-	__webpack_require__(35);
+	__webpack_require__(34);
 	var Storage = __webpack_require__(25);
 
 	module.exports = new function () {
@@ -12884,68 +12886,6 @@
 
 /***/ },
 /* 34 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	__webpack_require__(35);
-	var Storage = __webpack_require__(25);
-
-	module.exports = new function () {
-	    var  self, objLayer, container = function () {
-	            return $('#julius-layer-container');
-	    };
-
-	    return {
-	        up: function () {
-	             
-	            $(document).bind('keydown', 'Alt+up', function () {
-	                objLayer = Storage.read();
-	                if (objLayer.opacity >= 1) {
-	                    return
-	                }
-	                objLayer.opacity += 0.1
-	                Storage.create(objLayer);
-	                container().css({'opacity': objLayer.opacity});
-	            });
-	        },
-	        down : function () {
-	            $(document).bind('keydown', 'Alt+down', function () {
-	                objLayer = Storage.read();
-	                if (objLayer.opacity == 0 ) {
-	                    return
-	                }
-	                objLayer.opacity = objLayer.opacity.toFixed(1);
-	                objLayer.opacity -= 0.1;
-	                Storage.create(objLayer);
-	                container().css({'opacity': objLayer.opacity});
-	            });
-	        },
-	        
-	        lockKeyPress : function () {
-	            var ar=new Array(33,34,35,36,37,38,39,40);
-	            $(document).keydown(function(e) {
-	                var key = e.which;
-	                if($.inArray(key,ar) > -1) {
-	                    e.preventDefault();
-	                    return false;
-	                }
-	                return true;
-	            });
-	        },
-	        
-	        init: function () {
-	            this.lockKeyPress();
-	            this.up();
-	            this.down();
-	        }
-	    }
-
-	};
-
-
-/***/ },
-/* 35 */
 /***/ function(module, exports) {
 
 	/*jslint browser: true*/
@@ -13153,6 +13093,68 @@
 
 	})(jQuery || this.jQuery || window.jQuery);
 
+
+
+/***/ },
+/* 35 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	__webpack_require__(34);
+	var Storage = __webpack_require__(25);
+
+	module.exports = new function () {
+	    var  self, objLayer, container = function () {
+	            return $('#julius-layer-container');
+	    };
+
+	    return {
+	        up: function () {
+	             
+	            $(document).bind('keydown', 'Alt+up', function () {
+	                objLayer = Storage.read();
+	                if (objLayer.opacity >= 1) {
+	                    return
+	                }
+	                objLayer.opacity += 0.1
+	                Storage.create(objLayer);
+	                container().css({'opacity': objLayer.opacity});
+	            });
+	        },
+	        down : function () {
+	            $(document).bind('keydown', 'Alt+down', function () {
+	                objLayer = Storage.read();
+	                if (objLayer.opacity == 0 ) {
+	                    return
+	                }
+	                objLayer.opacity = objLayer.opacity.toFixed(1);
+	                objLayer.opacity -= 0.1;
+	                Storage.create(objLayer);
+	                container().css({'opacity': objLayer.opacity});
+	            });
+	        },
+	        
+	        lockKeyPress : function () {
+	            var ar=new Array(33,34,35,36,37,38,39,40);
+	            $(document).keydown(function(e) {
+	                var key = e.which;
+	                if($.inArray(key,ar) > -1) {
+	                    e.preventDefault();
+	                    return false;
+	                }
+	                return true;
+	            });
+	        },
+	        
+	        init: function () {
+	            this.lockKeyPress();
+	            this.up();
+	            this.down();
+	        }
+	    }
+
+	};
 
 
 /***/ }

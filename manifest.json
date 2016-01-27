@@ -13,5 +13,8 @@
         "default_icon": "julius-16.png",
         "default_popup": "popup.html"
     },
+    "web_accessible_resources": [
+       "images/bg-popup.png"
+    ],
     "icons": { "16": "julius-16.png", "128": "julius-128.png" }
 }

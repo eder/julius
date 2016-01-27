@@ -10,3 +10,9 @@ This help you make your HTML more easy, since now you can compare  the layout wi
 + Displays JPG, PNG (also with transparency), GIF.
 + Keyboard control for pixel precise positioning.
 
+### See the example below
+
+#[![](https://raw.githubusercontent.com/eder/julius/master/images/example.gif)]
+
+
+

@@ -7,23 +7,18 @@ describe('Storage of data', function () {
         "left":0,
         "path":"",
         "opacity": 1,
-        "fileName": 'test0.jpg'
+        "fileName": ''
     };
-
 
     it('Should create a object with values pre-defined', function () {
         Storage.create(objectTest);
-        expect(Storage.read()['test0.jpg']).toEqual(objectTest);
+        expect(Storage.read()).toEqual(objectTest);
     });
 
-    it('Should remove a  object in storage', function () {
-        Storage.removeItem('test0.jpg')
-        expect(Storage.read()).toEqual({});
-    });
-
-    it('Should remove all object in storage', function () {
-        Storage.clear();
+    it('Should remove object in stoage', function () {
+        Storage.remove()
         expect(Storage.read()).toBeNull();
     });
 });
+
 

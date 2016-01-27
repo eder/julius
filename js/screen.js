@@ -11,7 +11,8 @@ module.exports = new function () {
         lastImage   : '.julius-last-images',
         popup : '.julius-popup-container',
         input       : '#input-path',
-        inputFake   : '#input-fake'
+        inputFake   : '#input-fake',
+        imageContainer : '#julius-layer-container'
     };
     var objLayer = {
         "top":0,
@@ -25,7 +26,8 @@ module.exports = new function () {
 
         render : function () {
             var $body = $('body');
-            if($(target.modal).length > 0) {
+            if($(target.modal).length > 0 || $(target.imageContainer).length > 0) {
+                alert('Ops! Inspect your HTML already exists an image layer created.')
                 return;
             }
 

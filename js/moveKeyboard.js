@@ -52,7 +52,7 @@ module.exports = new function () {
         },
 
         show : function () {
-            $(document).bind('keydown', 'Shift+J', function () {
+            $(document).bind('keydown', 'Shift+S', function () {
                 container().css({'display' : 'block'});
             });
         },

@@ -9310,7 +9310,7 @@
 	            $body.scrollTop();
 	            $body.append(templateStart());
 	            var imageUrl = chrome.extension.getURL('/images/bg-popup.png');
-	            $(target.pop).css('background-image', 'url(' + imageUrl + ')');
+	            $(target.popup).css('background-image', 'url(' + imageUrl + ')');
 	            $(target.modal).css({
 	                width   : window.screen.width,
 	                height  : window.screen.height
@@ -9384,7 +9384,7 @@
 
 	var Handlebars = __webpack_require__(4);
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-	    return "<style type=\"text/css\" media=\"screen\">\n    .julius-popup-container, .border-rounded {\n        width: 590px;\n        display: block;\n        height: 400px;\n        padding: 10px;\n        border-radius: 4px;\n        background-image: url('https://raw.githubusercontent.com/eder/julius/master/images/bg-popup.png');\n        margin: 0 auto;\n        margin-top: 100px;\n        z-index: 999999999999;\n        position: relative;\n    }\n\n    .julius-label {\n        color: #777;\n        font-size: 14px;\n        padding: 10px;\n        display: inline-block;\n    }\n    .julius-input {\n        font-family: \"Arial\";\n        padding: 10px;\n        border-radius: 4px;\n        border: 1px solid #888;\n        font-size: 14px;\n        width: 400px;\n\n    }\n    .julius-form {\n        position: relative;\n        top: 340px;\n        left: 20px;\n    }\n\n    .julius-button {\n        border-radius: 4px;\n        border: 1px solid #888;\n        color: #F6F5F5;\n        background-color: rgb(60, 59, 59);\n        padding: 10px;\n        cursor: pointer;\n        font-size: small;\n        width: 200px;\n        box-shadow: 0px 2px 3px #918F8F;\n        margin-bottom: 30px;\n        float: right;\n    }\n    .julius-input-hide {\n        position: absolute;\n        width: 200px;\n        height: 55px;\n        opacity: 0;\n        cursor: pointer;\n        top: -15px;\n        left: 362px;\n    }\n\n    .julius-container-input_file {\n        position: relative;\n        top: -30px;\n        left: 50px;\n    }\n\n    #julius-modal {\n        position: absolute;\n        width: 100%;\n        height: 100%;\n        display: block;\n        background-color: rgba(0, 0, 0, 0.66);\n        top: 1px;\n        z-index: 99999999999;\n    }\n\n    .julius-close--screen {\n        float: right;\n        font-size: 14px;\n        color: #000;\n        font-weight: bold;\n        height: 8px;\n        width: 8px;\n        display: block;\n        text-decoration: none !important;\n        font-family: Arial;\n        line-height: 8px;\n        padding: 10px;\n    }\n    .julius-close--screen:hover {\n        color: #fff;\n        border-radius: 20px;\n        background-color: #ccc;\n        height: 8px;\n        width: 8px;\n    }\n    .julius-last-images {\n        position: absolute;\n        top: 260px;\n        left: -7px;\n        width: 140px;\n        text-align: center;\n    }\n    \n    .julius-last-images > img {\n        border-radius: 3px;\n        border: solid 1px #8B8A8A;\n        box-shadow: 1px 3px 5px #888888;\n        cursor: pointer;\n        width: 140px;\n        height: 100px;\n\n    }\n    \n    .julius-last-images  > p {\n        line-height: 18px;\n        margin-top: 6px;\n        font-size: small;\n        color: #9E9E9E;\n        font-family: sans-serif;\n    }\n</style>\n<section id=\"julius-modal\">\n    <section class=\"julius-popup-container\">\n        <a class=\"julius-close--screen\" href=\"#\">x</a>\n       <form  class=\"julius-form\">\n            <input title=\"Open Image\"  class=\"julius-input-hide\" id=\"input-path\"  type=\"file\">\n            <button title=\"Open Image\" id=\"button-send\" class=\"julius-button\"> \n                    Open image\n            </button>\n        </form>\n    </section>\n</section>\n";
+	    return "<style type=\"text/css\" media=\"screen\">\n    .julius-popup-container, .border-rounded {\n        width: 700px;\n        display: block;\n        height: 500px;\n        padding: 10px;\n        border-radius: 4px;\n        margin: 0 auto;\n        margin-top: 100px;\n        z-index: 999999999999;\n        position: relative;\n        background-repeat: no-repeat;\n    }\n\n    .julius-label {\n        color: #777;\n        font-size: 14px;\n        padding: 10px;\n        display: inline-block;\n    }\n    .julius-input {\n        font-family: \"Arial\";\n        padding: 10px;\n        border-radius: 4px;\n        border: 1px solid #888;\n        font-size: 14px;\n        width: 400px;\n\n    }\n    .julius-form {\n        position: relative;\n        top: 340px;\n        left: 20px;\n    }\n\n    .julius-button {\n        border-radius: 4px;\n        border: 1px solid #888;\n        color: #F6F5F5;\n        background-color: rgb(60, 59, 59);\n        padding: 10px;\n        cursor: pointer;\n        font-size: small;\n        width: 200px;\n        box-shadow: 0px 2px 3px #918F8F;\n        margin-bottom: 30px;\n        float: right;\n        position: relative;\n        top: 72px;\n        right: 28px\n    }\n    .julius-input-hide {\n        position: absolute;\n        width: 200px;\n        height: 55px;\n        opacity: 0;\n        cursor: pointer;\n        top: 63px;\n        left: 444px;\n          z-index: 1;\n    }\n\n    .julius-container-input_file {\n        position: relative;\n        top: -30px;\n        left: 50px;\n    }\n\n    #julius-modal {\n        position: absolute;\n        width: 100%;\n        height: 100%;\n        display: block;\n        background-color: rgba(0, 0, 0, 0.66);\n        top: 1px;\n        z-index: 99999999999;\n    }\n\n    .julius-close--screen {\n        float: right;\n        font-size: 14px;\n        color: #000;\n        font-weight: bold;\n        height: 8px;\n        width: 8px;\n        display: block;\n        text-decoration: none !important;\n        font-family: Arial;\n        line-height: 8px;\n        padding: 10px;\n    }\n    .julius-close--screen:hover {\n        color: #fff;\n        border-radius: 20px;\n        background-color: #ccc;\n        height: 8px;\n        width: 8px;\n    }\n    .julius-last-images {\n        position: absolute;\n        top: 350px;\n        left: -13px;\n        width: 140px;\n        text-align: center;\n    }\n    \n    .julius-last-images > img {\n        border-radius: 3px;\n        border: solid 1px #8B8A8A;\n        box-shadow: 1px 3px 5px #888888;\n        cursor: pointer;\n        width: 140px;\n        height: 85px;\n\n    }\n    \n    .julius-last-images  > p {\n        line-height: 18px;\n        margin-top: 6px;\n        font-size: small;\n        color: #9E9E9E;\n        font-family: sans-serif;\n    }\n</style>\n<section id=\"julius-modal\">\n    <section class=\"julius-popup-container\">\n        <a class=\"julius-close--screen\" href=\"#\">x</a>\n       <form  class=\"julius-form\">\n            <input title=\"Open Image\"  class=\"julius-input-hide\" id=\"input-path\"  type=\"file\">\n            <button title=\"Open Image\" id=\"button-send\" class=\"julius-button\"> \n                    Open image\n            </button>\n        </form>\n    </section>\n</section>\n";
 	},"useData":true});
 
 /***/ },
@@ -10620,52 +10620,42 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	window.jQuery = window.$ =  __webpack_require__(1);
+	window.jQuery = window.$ = __webpack_require__(1);
 
 	var localStorage = __webpack_require__(26);
-	var storage_name = 'juliusLayer', index, dataObject = {};
 
-	module.exports = (function () {
+	module.exports = new function() {
+	    var storage_name = 'juliusLayer',
+	        index;
 	    return {
-	        create: function (data) {
-	            if(this.isDiference(data)) {
-	                dataObject[data.fileName] = data;
-	                $.localStorage.setItem(storage_name, JSON.stringify(dataObject));
+	        create: function(data) {
+	            if (this.isDiference(data)) {
+	                $.localStorage.setItem(storage_name, JSON.stringify(data));
 	            }
 	        },
-
-	        read: function () {
-	            var  result = $.localStorage.getItem(storage_name);
+	        read: function() {
+	            var result = $.localStorage.getItem(storage_name);
 	            return JSON.parse(result);
 	        },
-
-	        removeItem : function (itemName) {
-	            var data = JSON.parse($.localStorage.getItem(storage_name));
-	            delete data[itemName];
-	            $.localStorage.setItem(storage_name, JSON.stringify(data));
-	        },
-
-	        clear: function () {
+	        remove: function() {
 	            $.localStorage.removeItem(storage_name);
 	        },
-
-	        isDiference: function (data) {
-	            var result = this.read(data);
-	            if (result) {
-	                return this.compareJSON(result, data);
+	        isDiference: function(data) {
+	            var res = this.read(data);
+	            if (res) {
+	                return this.compareJSON(res, data);
 	            }
 	            return true;
 	        },
-
-	        compareJSON : function(oldValue, newValue) {
-	            for( index in newValue) {
-	                if(oldValue[index] !== newValue[index]) {
+	        compareJSON: function(oldValue, newValue) {
+	            for (index in newValue) {
+	                if (oldValue[index] !== newValue[index]) {
 	                    return true;
 	                }
 	            }
 	        }
 	    };
-	})();
+	};
 
 
 /***/ },

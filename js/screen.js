@@ -32,7 +32,7 @@ module.exports = new function () {
             $body.scrollTop();
             $body.append(templateStart());
             var imageUrl = chrome.extension.getURL('/images/bg-popup.png');
-            $(target.pop).css('background-image', 'url(' + imageUrl + ')');
+            $(target.popup).css('background-image', 'url(' + imageUrl + ')');
             $(target.modal).css({
                 width   : window.screen.width,
                 height  : window.screen.height

@@ -30,23 +30,30 @@ gulp.task('deploy', ['zip'], function () {
     var filesToMove = [
         'js/julius.js',
         'js/popup.js',
+        'images/bg-popup.png',
         'manifest.json',
         'popup.html',
         'julius-128.png',
         'julius-16.png'
     ];
-    var er =  new RegExp('js/');
+
+    var er =  new RegExp(/.*\//);
+
     for(var i = 0; i < filesToMove.length; i++ ) {
-        var match = er.test(filesToMove[i]);
-        if(match) {
-            gulp.src(filesToMove[i]).pipe(gulp.dest('./deploy/js/'));
-        } else {
-            gulp.src(filesToMove[i]).pipe(gulp.dest('./deploy/'));
+      var r = er.exec(filesToMove[i]);
+      if(r) {
+        switch (r[0]) {
+          case 'js/':
+             gulp.src(filesToMove[i]).pipe(gulp.dest('./deploy/js/'));
+          break
+          case 'images/':
+             gulp.src(filesToMove[i]).pipe(gulp.dest('./deploy/images/'));
         }
+      } else {
+        gulp.src(filesToMove[i]).pipe(gulp.dest('./deploy/'));
+      }
     }
-})
-
-
+});
 
 gulp.task('default', ['watch', 'build', 'deploy', 'zip']);
 

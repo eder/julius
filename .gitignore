@@ -5,3 +5,4 @@ deploy/*
 *.swo
 *.DS_Store
 *.zip
+package/*

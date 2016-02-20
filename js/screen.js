@@ -27,7 +27,7 @@ module.exports = new function () {
         render : function () {
             var $body = $('body');
             if($(target.modal).length > 0 || $(target.imageContainer).length > 0) {
-                alert('Ops! Inspect your HTML already exists an image layer created.')
+                alert('Ops! Inspect your HTML. An image layer was already created.')
                 return;
             }
 

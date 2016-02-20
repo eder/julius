@@ -1,6 +1,6 @@
 {
     "name": "Julius Layer",
-    "description": "This app put image one layer on your HTML. To compare the layout with HTML created",
+    "description": "This app puts an image layer over your HTML. Use it to compare the layout with the current page.",
     "version": "0.1",
     "manifest_version": 2,
     "permissions": [

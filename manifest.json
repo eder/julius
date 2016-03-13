@@ -1,7 +1,7 @@
 {
-    "name": "Julius Layer",
-    "description": "This app puts an image layer over your HTML. Use it to compare the layout with the current page.",
-    "version": "0.1",
+    "name" : "Julius Layer",
+    "description": "Julius Layer is an app for chrome that puts one image layer on top the of your HTML at its actual size. It helps you to make your HTML more easily, since now you can compare the layout with the HTML",
+    "version": "0.3",
     "manifest_version": 2,
     "permissions": [
         "activeTab",
